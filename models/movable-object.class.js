@@ -1,11 +1,13 @@
 class MovableObject {
-  x = 120;
+  x = 150;
   y = 195;
   img;
   height = 180;
   width = 100;
   imageCache = {};
   currentImage = 0;
+  speed = 0.15;
+  otherDirection = false;
 
   loadImage(path) {
     this.img = new Image();
@@ -20,13 +22,22 @@ class MovableObject {
     });
   }
 
+  playAnimation(images) {
+    let i = this.currentImage % this.IMAGES_WALKING.length;
+    let path = images[i];
+    this.img = this.imageCache[path];
+    this.currentImage++;
+  }
+
   moveRight() {
-    this.x += 10;
-    console.log("Moving right");
+    setInterval(() => {
+      this.x += this.speed;
+    }, 1000 / 60);
   }
 
   moveLeft() {
-    this.x -= 10;
-    console.log("Moving left");
+    setInterval(() => {
+      this.x -= this.speed;
+    }, 1000 / 60);
   }
 }
