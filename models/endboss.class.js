@@ -1,6 +1,12 @@
 class Endboss extends MovableObject {
   height = 500;
   width = 400;
+  offset = {
+    top: 20,
+    bottom: 20,
+    left: 50,
+    right: 70,
+  };
   IMAGES_WALKING = [
     "img/4_enemie_boss_chicken/1_walk/G1.png",
     "img/4_enemie_boss_chicken/1_walk/G2.png",
@@ -30,7 +36,9 @@ class Endboss extends MovableObject {
   }
 
   animate() {
-    this.moveLeft();
+    setInterval(() => {
+      this.moveLeft();
+    }, 1000 / 60);
     setInterval(() => {
       this.playAnimation(this.IMAGES_WALKING);
     }, 1000 / 3);
