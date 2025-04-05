@@ -63,6 +63,7 @@ class Character extends MovableObject {
     this.loadImages(this.IMAGES_JUMPING);
     this.loadImages(this.IMAGES_DEAD);
     this.loadImages(this.IMAGES_HURT);
+    this.loadImages(this.IMAGES_IDLE);
     this.applyGravity();
     this.animate();
   }
@@ -72,15 +73,21 @@ class Character extends MovableObject {
       if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
         this.moveRight();
         this.otherDirection = false;
+      } else {
+        this.playAnimation(this.IMAGES_IDLE);
       }
 
       if (this.world.keyboard.LEFT && this.x > -150) {
         this.moveLeft();
         this.otherDirection = true;
+      } else {
+        this.playAnimation(this.IMAGES_IDLE);
       }
 
       if (this.world.keyboard.SPACE && !this.isAboveGround()) {
         this.jump();
+      } else {
+        this.playAnimation(this.IMAGES_IDLE);
       }
 
       this.world.camera_x = -this.x + 150;
