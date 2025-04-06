@@ -1,8 +1,8 @@
 class Character extends MovableObject {
   height = 350;
   width = 180;
-  speed = 20;
-  y = 60;
+  speed = 30;
+  y = 0;
   offset = {
     top: 100,
     bottom: 15,
@@ -70,28 +70,30 @@ class Character extends MovableObject {
 
   animate() {
     setInterval(() => {
-      if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
+      if (
+        this.world.keyboard.RIGHT &&
+        this.x < this.world.level.level_end_x &&
+        !this.isDead()
+      ) {
         this.moveRight();
         this.otherDirection = false;
-      } else {
-        this.playAnimation(this.IMAGES_IDLE);
       }
 
-      if (this.world.keyboard.LEFT && this.x > -150) {
+      if (this.world.keyboard.LEFT && this.x > -150 && !this.isDead()) {
         this.moveLeft();
         this.otherDirection = true;
-      } else {
-        this.playAnimation(this.IMAGES_IDLE);
       }
 
-      if (this.world.keyboard.SPACE && !this.isAboveGround()) {
+      if (
+        this.world.keyboard.SPACE &&
+        !this.isAboveGround() &&
+        !this.isDead()
+      ) {
         this.jump();
-      } else {
-        this.playAnimation(this.IMAGES_IDLE);
       }
 
       this.world.camera_x = -this.x + 150;
-    }, 1000 / 20);
+    }, 80);
 
     setInterval(() => {
       if (this.isDead()) {
@@ -105,6 +107,20 @@ class Character extends MovableObject {
           this.playAnimation(this.IMAGES_WALKING);
         }
       }
-    }, 1000 / 10);
+    }, 120);
+
+    setInterval(() => {
+      if (
+        !this.world.keyboard.RIGHT &&
+        !this.world.keyboard.LEFT &&
+        !this.world.keyboard.SPACE &&
+        !this.world.keyboard.D &&
+        !this.isDead() &&
+        !this.isAboveGround() &&
+        !this.isHurt()
+      ) {
+        this.playAnimation(this.IMAGES_IDLE);
+      }
+    }, 200);
   }
 }
