@@ -5,8 +5,10 @@ class World {
   canvas;
   ctx;
   keyboard;
-  camera_x = 0;
+  camera_x = 100;
   statusBar = new StatusBar();
+  bottleBar = new BottleBar();
+  coinBar = new CoinBar();
   throwableObjects = [];
 
   constructor(canvas, keyboard) {
@@ -62,6 +64,8 @@ class World {
     this.ctx.translate(-this.camera_x, 0);
     // --------- space for fixed objects --------
     this.addToMap(this.statusBar);
+    this.addToMap(this.bottleBar);
+    this.addToMap(this.coinBar);
 
     let self = this;
     requestAnimationFrame(function () {
