@@ -3,8 +3,14 @@ let world;
 let keyboard = new Keyboard();
 
 function init() {
+  initLevel();
   canvas = document.getElementById("canvas");
   world = new World(canvas, keyboard);
+  hideScreens();
+}
+
+function hideScreens() {
+  document.getElementById("startScreen").style.display = "none";
 }
 
 window.addEventListener("keydown", (e) => {

@@ -9,7 +9,7 @@ class BottleBar extends DrawableObject {
   ];
   percentage = 0;
   height = 60;
-  width = 270;
+  width = 210;
 
   constructor() {
     super();

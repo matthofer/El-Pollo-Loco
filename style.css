@@ -20,9 +20,74 @@ body {
 }
 
 h1 {
-  font-size: 64px;
+  font-size: 74px;
+  color: rgb(233, 114, 58);
+  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
+    1px 1px 0 #000;
+}
+
+.game-container {
+  position: relative;
+  width: 1080px;
+  height: 600px;
+}
+
+.content {
+  display: contents;
+  position: relative;
+  width: 1080px;
+  height: 600px;
 }
 
 canvas {
+  display: block;
   background-color: black;
+  position: absolute;
+}
+
+.start-screen {
+  position: absolute;
+  width: 1080px;
+  height: 600px;
+  background-image: url(img/9_intro_outro_screens/start/startscreen_2.png);
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  z-index: 1;
+}
+
+.start-buttons {
+  display: flex;
+  justify-content: center;
+  position: absolute;
+  top: 50px;
+  width: 100%;
+}
+
+.btn-start {
+  cursor: pointer;
+  text-decoration: none;
+  padding: 10px 30px;
+  font-size: 22px;
+  border-radius: 10px;
+  border: 2px solid rgb(233, 114, 58);
+  background: linear-gradient(to bottom, #ffec64 5%, #ffab23 100%);
+  transition: transform 0.3s;
+}
+
+.btn-play {
+  padding: 12px 46px;
+  font-size: 28px;
+}
+
+.btn-start:hover {
+  transform: scale(1.1);
+}
+
+.start-buttons-bottom {
+  display: flex;
+  justify-content: center;
+  position: absolute;
+  bottom: 20px;
+  gap: 60px;
+  width: 100%;
 }

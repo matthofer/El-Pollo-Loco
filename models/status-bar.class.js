@@ -9,7 +9,7 @@ class StatusBar extends DrawableObject {
   ];
   percentage = 100;
   height = 60;
-  width = 270;
+  width = 210;
 
   constructor() {
     super();

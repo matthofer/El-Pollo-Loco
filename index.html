@@ -11,6 +11,7 @@
     <script src="models/chicken.class.js"></script>
     <script src="models/character.class.js"></script>
     <script src="models/chick.class.js"></script>
+    <script src="models/endboss.class.js"></script>
     <script src="models/cloud.class.js"></script>
     <script src="models/status-bar.class.js"></script>
     <script src="models/bottle-bar.class.js"></script>
@@ -20,13 +21,25 @@
     <script src="models/keyboard.class.js"></script>
     <script src="models/level.class.js"></script>
     <script src="models/throwable-object.class.js"></script>
-    <script src="models/endboss.class.js"></script>
     <script src="./levels/level1.js"></script>
     <script src="./js/game.js"></script>
   </head>
-  <body onload="init()">
+  <body>
     <h1>El Pollo Loco</h1>
 
-    <canvas id="canvas" width="1080" height="600"></canvas>
+    <div class="game-container">
+      <div class="content">
+        <canvas id="canvas" width="1080" height="600"></canvas>
+      </div>
+      <div id="startScreen" class="start-screen">
+        <div class="start-buttons">
+          <button class="btn-start btn-play" onclick="init()">Play</button>
+        </div>
+        <div class="start-buttons-bottom">
+          <button class="btn-start">Help</button>
+          <button class="btn-start">Imprint</button>
+        </div>
+      </div>
+    </div>
   </body>
 </html>
