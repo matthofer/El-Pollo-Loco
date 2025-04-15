@@ -3,14 +3,38 @@ let world;
 let keyboard = new Keyboard();
 
 function init() {
-  initLevel();
-  canvas = document.getElementById("canvas");
-  world = new World(canvas, keyboard);
-  hideScreens();
+  showLoadingScreen();
+  loadGame().then(hideLoadingScreen);
 }
 
-function hideScreens() {
+function startGame() {
+  canvas = document.getElementById("canvas");
+  initLevel();
+  world = new World(canvas, keyboard);
+}
+
+function showLoadingScreen() {
+  document.getElementById("loading-screen").style.display = "flex";
   document.getElementById("startScreen").style.display = "none";
+}
+
+function hideLoadingScreen() {
+  document.getElementById("loading-screen").style.display = "none";
+  startGame();
+}
+
+function updateProgress(current, total) {
+  const percent = Math.round((current / total) * 100);
+  document.getElementById("loading-bar").style.width = `${percent}%`;
+  document.getElementById("loading-text").innerText = `${percent}%`;
+}
+
+function updateProgressBar(percent) {
+  document.getElementById("loading-bar").style.width = `${percent}%`;
+}
+
+function updateProgressText(percent) {
+  document.getElementById("loading-text").innerText = `${percent}%`;
 }
 
 window.addEventListener("keydown", (e) => {

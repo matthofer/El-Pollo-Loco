@@ -91,3 +91,56 @@ canvas {
   gap: 60px;
   width: 100%;
 }
+
+#loading-screen {
+  position: absolute;
+  width: 1080px;
+  height: 600px;
+  background: #2e1c1a;
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  font-family: "Arial", sans-serif;
+  color: white;
+}
+
+#loading-bar-container {
+  width: 300px;
+  height: 20px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  margin: 20px 0;
+  overflow: hidden;
+}
+
+#loading-bar {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #ff6b00, #ffa502);
+  border-radius: 10px;
+  transition: width 0.3s ease-out;
+  animation: pulse 1.5s infinite alternate;
+}
+
+#loading-text {
+  font-size: 14px;
+  margin-top: 10px;
+  opacity: 0.8;
+}
+
+#loading-screen h2 {
+  font-size: 24px;
+  margin-bottom: 10px;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+@keyframes pulse {
+  from {
+    opacity: 0.8;
+  }
+  to {
+    opacity: 1;
+  }
+}

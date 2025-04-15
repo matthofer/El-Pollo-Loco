@@ -23,6 +23,7 @@
     <script src="models/throwable-object.class.js"></script>
     <script src="./levels/level1.js"></script>
     <script src="./js/game.js"></script>
+    <script src="./js/preload.js"></script>
   </head>
   <body>
     <h1>El Pollo Loco</h1>
@@ -39,6 +40,13 @@
           <button class="btn-start">Help</button>
           <button class="btn-start">Imprint</button>
         </div>
+      </div>
+      <div id="loading-screen">
+        <h2>Loading...</h2>
+        <div id="loading-bar-container">
+          <div id="loading-bar"></div>
+        </div>
+        <p id="loading-text">0%</p>
       </div>
     </div>
   </body>
