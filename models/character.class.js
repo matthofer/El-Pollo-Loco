@@ -1,7 +1,7 @@
 class Character extends MovableObject {
   height = 350;
   width = 180;
-  speed = 30;
+  speed = 40;
   y = 0;
   offset = {
     top: 100,
@@ -9,6 +9,8 @@ class Character extends MovableObject {
     left: 35,
     right: 45,
   };
+  afterJump = false;
+  gettingHit = false;
   IMAGES_WALKING = [
     "../img/2_character_pepe/2_walk/W-21.png",
     "../img/2_character_pepe/2_walk/W-22.png",
@@ -98,7 +100,7 @@ class Character extends MovableObject {
     setInterval(() => {
       if (this.isDead()) {
         this.playAnimation(this.IMAGES_DEAD);
-      } else if (this.isHurt()) {
+      } else if (this.gettingHit || this.isHurt()) {
         this.playAnimation(this.IMAGES_HURT);
       } else if (this.isAboveGround()) {
         this.playAnimation(this.IMAGES_JUMPING);
@@ -107,7 +109,7 @@ class Character extends MovableObject {
           this.playAnimation(this.IMAGES_WALKING);
         }
       }
-    }, 130);
+    }, 100);
 
     setInterval(() => {
       if (
@@ -122,5 +124,15 @@ class Character extends MovableObject {
         this.playAnimation(this.IMAGES_IDLE);
       }
     }, 200);
+  }
+
+  takingHit() {
+    if (!this.gettingHit) {
+      this.hit();
+      this.gettingHit = true;
+      setTimeout(() => {
+        this.gettingHit = false;
+      }, 500);
+    }
   }
 }
