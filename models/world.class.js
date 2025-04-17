@@ -28,7 +28,8 @@ class World {
     setInterval(() => {
       this.checkThrowObjects();
       this.checkCollisions();
-    }, 150);
+      this.checkDeathsAfterCollision();
+    }, 10);
   }
 
   checkThrowObjects() {
@@ -44,11 +45,29 @@ class World {
 
   checkCollisions() {
     this.level.enemies.forEach((enemy) => {
-      if (this.character.isColliding(enemy)) {
-        this.character.hit();
-        this.statusBar.setPercentage(this.character.energy);
+      if (enemy.isColliding(this.character) && !enemy.isDead()) {
+        if (this.isCollisionFromAbove(enemy)) {
+          this.character.afterJump = false;
+          enemy.hit();
+          this.character.jump();
+        } else {
+          if (!this.character.isHurt() && !this.character.gettingHit) {
+            this.character.takingHit();
+            this.statusBar.setPercentage(this.character.energy);
+          }
+        }
       }
     });
+  }
+
+  isCollisionFromAbove(enemy) {
+    if (!this.character.isColliding(enemy)) return false;
+
+    const characterFeet =
+      this.character.y + this.character.height - this.character.offset.bottom;
+    const enemyHead = enemy.y + enemy.offset.top;
+
+    return characterFeet >= enemyHead - 30 && characterFeet <= enemyHead + 40;
   }
 
   draw() {
@@ -102,5 +121,26 @@ class World {
   flipImageBack(mo) {
     mo.x = -mo.x;
     this.ctx.restore();
+  }
+
+  checkDeathsAfterCollision() {
+    if (this.level.enemies.length > 0) {
+      this.checkEnemiesDeaths();
+    }
+  }
+
+  checkEnemiesDeaths() {
+    for (let enemy of this.level.enemies) {
+      if (enemy.isDead()) {
+        this.removeDeadEnemy(enemy);
+        break;
+      }
+    }
+  }
+
+  removeDeadEnemy(enemy) {
+    setTimeout(() => {
+      this.level.enemies = this.level.enemies.filter((e) => e !== enemy);
+    }, 150);
   }
 }
