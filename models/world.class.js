@@ -29,6 +29,7 @@ class World {
       this.checkThrowObjects();
       this.checkCollisions();
       this.checkDeathsAfterCollision();
+      this.checkEndbossActivation();
     }, 10);
   }
 
@@ -152,5 +153,16 @@ class World {
     setTimeout(() => {
       this.level.enemies = this.level.enemies.filter((e) => e !== enemy);
     }, 150);
+  }
+
+  checkEndbossActivation() {
+    const boss = this.level.enemies.find((e) => e instanceof Endboss);
+    if (boss && !boss.hadFirstContact) {
+      const distance = Math.abs(this.character.x - boss.x);
+      if (distance < 600) {
+        boss.hadFirstContact = true;
+        boss.startAlert();
+      }
+    }
   }
 }

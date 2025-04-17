@@ -4,13 +4,15 @@ class Character extends MovableObject {
   speed = 40;
   y = 0;
   offset = {
-    top: 100,
+    top: 130,
     bottom: 15,
     left: 35,
-    right: 45,
+    right: 50,
   };
   afterJump = false;
   gettingHit = false;
+  isJumping = false;
+  jumpAnimationInterval;
   IMAGES_WALKING = [
     "../img/2_character_pepe/2_walk/W-21.png",
     "../img/2_character_pepe/2_walk/W-22.png",
@@ -31,17 +33,9 @@ class Character extends MovableObject {
     "../img/2_character_pepe/1_idle/idle/I-9.png",
     "../img/2_character_pepe/1_idle/idle/I-10.png",
   ];
-  IMAGES_JUMPING = [
-    "../img/2_character_pepe/3_jump/J-31.png",
-    "../img/2_character_pepe/3_jump/J-32.png",
-    "../img/2_character_pepe/3_jump/J-33.png",
-    "../img/2_character_pepe/3_jump/J-34.png",
-    "../img/2_character_pepe/3_jump/J-35.png",
-    "../img/2_character_pepe/3_jump/J-36.png",
-    "../img/2_character_pepe/3_jump/J-37.png",
-    "../img/2_character_pepe/3_jump/J-38.png",
-    "../img/2_character_pepe/3_jump/J-39.png",
-  ];
+  IMAGE_JUMPING_UP = "../img/2_character_pepe/3_jump/J-35.png";
+  IMAGE_JUMPING_MID = "../img/2_character_pepe/3_jump/J-37.png";
+  IMAGE_JUMPING_DOWN = "../img/2_character_pepe/3_jump/J-38.png";
   IMAGES_DEAD = [
     "../img/2_character_pepe/5_dead/D-51.png",
     "../img/2_character_pepe/5_dead/D-52.png",
@@ -62,7 +56,11 @@ class Character extends MovableObject {
   constructor() {
     super().loadImage("../img/2_character_pepe/1_idle/idle/I-1.png");
     this.loadImages(this.IMAGES_WALKING);
-    this.loadImages(this.IMAGES_JUMPING);
+    this.loadImages([
+      this.IMAGE_JUMPING_UP,
+      this.IMAGE_JUMPING_MID,
+      this.IMAGE_JUMPING_DOWN,
+    ]);
     this.loadImages(this.IMAGES_DEAD);
     this.loadImages(this.IMAGES_HURT);
     this.loadImages(this.IMAGES_IDLE);
@@ -103,7 +101,13 @@ class Character extends MovableObject {
       } else if (this.gettingHit || this.isHurt()) {
         this.playAnimation(this.IMAGES_HURT);
       } else if (this.isAboveGround()) {
-        this.playAnimation(this.IMAGES_JUMPING);
+        if (this.speedY > 0) {
+          this.img = this.imageCache[this.IMAGE_JUMPING_UP];
+        } else if (this.speedY < 25 && this.speedY > -25) {
+          this.img = this.imageCache[this.IMAGE_JUMPING_MID];
+        } else {
+          this.img = this.imageCache[this.IMAGE_JUMPING_DOWN];
+        }
         this.afterJump = true;
       } else {
         if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
