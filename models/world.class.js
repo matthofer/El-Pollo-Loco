@@ -80,6 +80,7 @@ class World {
     this.addToMap(this.character);
     this.addObjectsToMap(this.level.enemies);
     this.addObjectsToMap(this.throwableObjects);
+    this.addObjectsToMap(this.level.coins);
 
     this.ctx.translate(-this.camera_x, 0);
     // --------- space for fixed objects --------
@@ -90,6 +91,7 @@ class World {
     let self = this;
     requestAnimationFrame(function () {
       self.draw();
+      self.checkOtherDirection();
     });
   }
 
@@ -121,6 +123,14 @@ class World {
   flipImageBack(mo) {
     mo.x = -mo.x;
     this.ctx.restore();
+  }
+
+  checkOtherDirection() {
+    if (this.keyboard.LEFT && !this.character.speed == 0)
+      this.character.otherDirection = true;
+
+    if (this.keyboard.RIGHT && !this.character.speed == 0)
+      this.character.otherDirection = false;
   }
 
   checkDeathsAfterCollision() {

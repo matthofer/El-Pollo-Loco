@@ -1,4 +1,5 @@
 class MovableObject extends DrawableObject {
+  x = 50;
   speed = 0.15;
   otherDirection = false;
   speedY = 0;
@@ -42,7 +43,7 @@ class MovableObject extends DrawableObject {
   }
 
   hit() {
-    this.energy -= 5;
+    this.energy -= 10;
     this.lastHit = Date.now();
     if (this.energy <= 0) this.energy = 0;
   }
