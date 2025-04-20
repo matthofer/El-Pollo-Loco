@@ -10,6 +10,7 @@ class World {
   bottleBar = new BottleBar();
   coinBar = new CoinBar();
   throwableObjects = [];
+  lastThrowTime = 0;
 
   constructor(canvas, keyboard) {
     this.ctx = canvas.getContext("2d");
@@ -34,14 +35,21 @@ class World {
   }
 
   checkThrowObjects() {
-    if (this.keyboard.D) {
+    const now = Date.now();
+    const cooldown = 500;
+
+    if (this.keyboard.D && now - this.lastThrowTime > cooldown) {
       let bottle = new ThrowableObject(
         this.character.x + 100,
         this.character.y + 100,
         this.character
       );
       this.throwableObjects.push(bottle);
+      this.lastThrowTime = now;
     }
+    this.throwableObjects = this.throwableObjects.filter(
+      (obj) => !obj.markedForDeletion
+    );
   }
 
   checkCollisions() {

@@ -14,13 +14,23 @@ class MovableObject extends DrawableObject {
   lastHit = 0;
 
   applyGravity() {
+    const groundLevel = this instanceof ThrowableObject ? 455 : 180;
+
     setInterval(() => {
       if (this.isAboveGround() || this.speedY > 0) {
         this.y -= this.speedY;
         this.speedY -= this.acceleration;
       }
-      if (this.y > 180) {
-        this.y = 180;
+
+      if (this.y >= groundLevel) {
+        this.y = groundLevel;
+        this.speedY = 0;
+
+        if (this instanceof ThrowableObject) {
+          this.splash();
+        }
+
+        clearInterval(this.gravityInterval);
       }
     }, 1000 / 25);
   }
