@@ -1,11 +1,11 @@
 class Character extends MovableObject {
   height = 350;
   width = 180;
-  speed = 40;
+  speed = 12;
   y = 0;
   offset = {
     top: 130,
-    bottom: 15,
+    bottom: 13,
     left: 35,
     right: 50,
   };
@@ -93,7 +93,7 @@ class Character extends MovableObject {
       }
 
       this.world.camera_x = -this.x + 150;
-    }, 80);
+    }, 20);
 
     setInterval(() => {
       if (this.isDead()) {
@@ -115,7 +115,7 @@ class Character extends MovableObject {
         }
         this.afterJump = false;
       }
-    }, 100);
+    }, 80);
 
     setInterval(() => {
       if (
