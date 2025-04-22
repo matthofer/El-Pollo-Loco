@@ -11,6 +11,8 @@ class World {
   coinBar = new CoinBar();
   throwableObjects = [];
   lastThrowTime = 0;
+  collectedCoins = 0;
+  collectedBottles = 0;
 
   constructor(canvas, keyboard) {
     this.ctx = canvas.getContext("2d");
@@ -23,6 +25,8 @@ class World {
 
   setWorld() {
     this.character.world = this;
+    this.totalCoins = this.level.coins.length;
+    this.totalBottles = this.level.bottles.length;
   }
 
   run() {
@@ -31,6 +35,8 @@ class World {
       this.checkCollisions();
       this.checkDeathsAfterCollision();
       this.checkEndbossActivation();
+      this.collectCoins();
+      this.collectBottles();
     }, 10);
   }
 
@@ -173,5 +179,31 @@ class World {
         boss.startAlert();
       }
     }
+  }
+
+  collectCoins() {
+    this.level.coins.forEach((coin) => {
+      if (this.character.isColliding(coin)) {
+        coin.markedForDeletion = true;
+        this.collectedCoins++;
+        let percentage = (this.collectedCoins / this.totalCoins) * 100;
+        this.coinBar.setPercentage(percentage);
+      }
+    });
+
+    this.level.coins = this.level.coins.filter((c) => !c.markedForDeletion);
+  }
+
+  collectBottles() {
+    this.level.bottles.forEach((bottle) => {
+      if (this.character.isColliding(bottle)) {
+        bottle.markedForDeletion = true;
+        this.collectedBottles++;
+        let percentage = (this.collectedBottles / this.totalBottles) * 100;
+        this.bottleBar.setPercentage(percentage);
+      }
+    });
+
+    this.level.bottles = this.level.bottles.filter((b) => !b.markedForDeletion);
   }
 }
