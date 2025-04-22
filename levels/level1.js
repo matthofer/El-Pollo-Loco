@@ -146,6 +146,28 @@ function initLevel() {
       new Coin(3550, 100),
       new Coin(3600, 150),
       new Coin(4000, 50),
+    ]),
+    (bottles = [
+      new Bottle(),
+      new Bottle(),
+      new Bottle(),
+      new Bottle(),
+      new Bottle(),
+      new Bottle(),
+      new Bottle(),
+      new Bottle(),
+      new Bottle(),
+      new Bottle(),
+      new Bottle(),
+      new Bottle(),
+      new Bottle(),
+      new Bottle(),
+      new Bottle(),
+      new Bottle(),
+      new Bottle(),
+      new Bottle(),
+      new Bottle(),
+      new Bottle(),
     ])
   );
 }
