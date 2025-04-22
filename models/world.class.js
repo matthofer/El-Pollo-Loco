@@ -44,15 +44,27 @@ class World {
     const now = Date.now();
     const cooldown = 500;
 
-    if (this.keyboard.D && now - this.lastThrowTime > cooldown) {
+    if (
+      this.keyboard.D &&
+      now - this.lastThrowTime > cooldown &&
+      this.collectedBottles > 0
+    ) {
+      let direction = this.character.otherDirection ? -1 : 1;
+
       let bottle = new ThrowableObject(
-        this.character.x + 100,
+        this.character.x + (direction === -1 ? -30 : 100),
         this.character.y + 100,
-        this.character
+        this.character,
+        direction
       );
       this.throwableObjects.push(bottle);
+      this.collectedBottles--;
       this.lastThrowTime = now;
+
+      let percentage = (this.collectedBottles / this.totalBottles) * 100;
+      this.bottleBar.setPercentage(percentage);
     }
+
     this.throwableObjects = this.throwableObjects.filter(
       (obj) => !obj.markedForDeletion
     );
