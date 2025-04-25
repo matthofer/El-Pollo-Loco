@@ -15,6 +15,8 @@ class ThrowableObject extends MovableObject {
     "../img/6_salsa_bottle/bottle_rotation/bottle_splash/6_bottle_splash.png",
   ];
 
+  hasHit = false;
+
   constructor(x, y, character, direction = 1) {
     super().loadImage(
       "../img/6_salsa_bottle/bottle_rotation/1_bottle_rotation.png"
@@ -49,6 +51,7 @@ class ThrowableObject extends MovableObject {
 
   splash() {
     clearInterval(this.throwInterval);
+    clearInterval(this.gravityInterval);
     clearInterval(this.rotationInterval);
 
     let frame = 0;

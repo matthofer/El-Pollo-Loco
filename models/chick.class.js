@@ -46,5 +46,8 @@ class Chick extends MovableObject {
 
   showDeadImage() {
     this.img = this.imageCache[this.IMAGES_DEAD[0]];
+    setTimeout(() => {
+      this.markedForDeletion = true;
+    }, 300);
   }
 }

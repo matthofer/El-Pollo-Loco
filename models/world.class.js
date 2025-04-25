@@ -33,6 +33,7 @@ class World {
     setInterval(() => {
       this.checkThrowObjects();
       this.checkCollisions();
+      this.checkThrowableCollisions();
       this.checkDeathsAfterCollision();
       this.checkEndbossActivation();
       this.collectCoins();
@@ -95,6 +96,23 @@ class World {
     const enemyHead = enemy.y + enemy.offset.top;
 
     return characterFeet >= enemyHead - 30 && characterFeet <= enemyHead + 40;
+  }
+
+  checkThrowableCollisions() {
+    this.throwableObjects.forEach((bottle) => {
+      this.level.enemies.forEach((enemy) => {
+        if (bottle.isColliding(enemy) && !bottle.hasHit) {
+          bottle.hasHit = true;
+          bottle.splash();
+
+          if (enemy instanceof Endboss) {
+            enemy.hitByBottle();
+          } else {
+            enemy.hit();
+          }
+        }
+      });
+    });
   }
 
   draw() {
@@ -162,24 +180,12 @@ class World {
   }
 
   checkDeathsAfterCollision() {
-    if (this.level.enemies.length > 0) {
-      this.checkEnemiesDeaths();
-    }
-  }
-
-  checkEnemiesDeaths() {
-    for (let enemy of this.level.enemies) {
-      if (enemy.isDead()) {
-        this.removeDeadEnemy(enemy);
-        break;
+    this.level.enemies = this.level.enemies.filter((enemy) => {
+      if (enemy.markedForDeletion) {
+        return false;
       }
-    }
-  }
-
-  removeDeadEnemy(enemy) {
-    setTimeout(() => {
-      this.level.enemies = this.level.enemies.filter((e) => e !== enemy);
-    }, 150);
+      return true;
+    });
   }
 
   checkEndbossActivation() {
