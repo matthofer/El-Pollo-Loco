@@ -7,6 +7,7 @@ class Endboss extends MovableObject {
     left: 50,
     right: 70,
   };
+  bottleHits = 0;
   world;
   IMAGES_WALKING = [
     "img/4_enemie_boss_chicken/1_walk/G1.png",
@@ -26,12 +27,26 @@ class Endboss extends MovableObject {
     "img/4_enemie_boss_chicken/2_alert/G12.png",
   ];
 
+  IMAGES_HURT = [
+    "img/4_enemie_boss_chicken/4_hurt/G21.png",
+    "img/4_enemie_boss_chicken/4_hurt/G22.png",
+    "img/4_enemie_boss_chicken/4_hurt/G23.png",
+  ];
+
+  IMAGES_DEAD = [
+    "img/4_enemie_boss_chicken/5_dead/G24.png",
+    "img/4_enemie_boss_chicken/5_dead/G25.png",
+    "img/4_enemie_boss_chicken/5_dead/G26.png",
+  ];
+
   hadFirstContact = false;
 
   constructor() {
     super().loadImage("img/4_enemie_boss_chicken/1_walk/G1.png");
     this.loadImages(this.IMAGES_WALKING);
     this.loadImages(this.IMAGES_ALERT);
+    this.loadImages(this.IMAGES_HURT);
+    this.loadImages(this.IMAGES_DEAD);
     this.x = 5000;
     this.y = 70;
     this.speed = 0.8;
@@ -51,12 +66,58 @@ class Endboss extends MovableObject {
   }
 
   startWalking() {
+    clearInterval(this.walkInterval);
+
     this.walkInterval = setInterval(() => {
       this.moveLeft();
     }, 1000 / 60);
 
+    clearInterval(this.walkAnimInterval);
     this.walkAnimInterval = setInterval(() => {
       this.playAnimation(this.IMAGES_WALKING);
     }, 1000 / 10);
+  }
+
+  hitByBottle() {
+    this.bottleHits++;
+
+    let frame = 0;
+    clearInterval(this.alertInterval);
+    clearInterval(this.walkAnimInterval);
+    clearInterval(this.walkInterval);
+
+    if (this.bottleHits >= 5) {
+      this.die();
+    }
+
+    this.hurtInterval = setInterval(() => {
+      this.img = this.imageCache[this.IMAGES_HURT[frame]];
+      frame++;
+
+      if (frame >= this.IMAGES_HURT.length) {
+        clearInterval(this.hurtInterval);
+
+        if (!this.isDead()) {
+          this.startWalking();
+        }
+      }
+    }, 120);
+  }
+
+  die() {
+    this.energy = 0;
+    let frame = 0;
+    clearInterval(this.walkAnimInterval);
+    clearInterval(this.walkInterval);
+
+    this.deathInterval = setInterval(() => {
+      this.img = this.imageCache[this.IMAGES_DEAD[frame]];
+      frame++;
+
+      if (frame >= this.IMAGES_DEAD.length) {
+        clearInterval(this.deathInterval);
+        this.markedForDeletion = true;
+      }
+    }, 250);
   }
 }
