@@ -8,6 +8,7 @@ class Chick extends MovableObject {
     right: 15,
   };
   energy = 1;
+  deathAnimationFinished = false;
   movementInterval;
   animationInterval;
   IMAGES_WALKING = [
@@ -47,7 +48,7 @@ class Chick extends MovableObject {
   showDeadImage() {
     this.img = this.imageCache[this.IMAGES_DEAD[0]];
     setTimeout(() => {
-      this.markedForDeletion = true;
+      this.deathAnimationFinished = true;
     }, 300);
   }
 }

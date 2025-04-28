@@ -14,11 +14,19 @@ class World {
   lastThrowTime = 0;
   collectedCoins = 0;
   collectedBottles = 0;
+  gameOver = false;
+  gameWon = false;
 
   constructor(canvas, keyboard) {
     this.ctx = canvas.getContext("2d");
     this.canvas = canvas;
     this.keyboard = keyboard;
+    this.gameOverImg = new Image();
+    this.gameOverImg.src =
+      "../img/9_intro_outro_screens/game_over/oh no you lost!.png";
+    this.gameWonImg = new Image();
+    this.gameWonImg.src =
+      "../img/9_intro_outro_screens/game_over/game over!.png";
     this.draw();
     this.setWorld();
     this.run();
@@ -37,6 +45,9 @@ class World {
 
   run() {
     setInterval(() => {
+      if (this.gameOver || this.gameWon) {
+        return;
+      }
       this.checkThrowObjects();
       this.checkCollisions();
       this.checkThrowableCollisions();
@@ -80,7 +91,11 @@ class World {
 
   checkCollisions() {
     this.level.enemies.forEach((enemy) => {
-      if (enemy.isColliding(this.character) && !enemy.isDead()) {
+      if (
+        enemy.isColliding(this.character) &&
+        !enemy.isDead() &&
+        !this.character.isDead()
+      ) {
         if (this.isCollisionFromAbove(enemy)) {
           this.character.afterJump = false;
           enemy.hit();
@@ -124,7 +139,6 @@ class World {
 
   draw() {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-
     this.ctx.translate(this.camera_x, 0);
 
     this.addObjectsToMap(this.level.backgroundObjects);
@@ -143,12 +157,17 @@ class World {
     if (this.endbossBar.visible) {
       this.addToMap(this.endbossBar);
     }
+    if (this.gameOver || this.gameWon) {
+      this.showEndScreen();
+    }
 
     let self = this;
-    requestAnimationFrame(function () {
-      self.draw();
-      self.checkOtherDirection();
-    });
+    if (!this.gameOver && !this.gameWon) {
+      requestAnimationFrame(function () {
+        self.draw();
+        self.checkOtherDirection();
+      });
+    }
   }
 
   addObjectsToMap(objects) {
@@ -162,7 +181,7 @@ class World {
       this.flipImage(mo);
     }
     mo.draw(this.ctx);
-    mo.drawFrame(this.ctx);
+    // mo.drawFrame(this.ctx);
 
     if (mo.otherDirection) {
       this.flipImageBack(mo);
@@ -191,11 +210,22 @@ class World {
 
   checkDeathsAfterCollision() {
     this.level.enemies = this.level.enemies.filter((enemy) => {
-      if (enemy.markedForDeletion) {
-        return false;
+      if (enemy instanceof Endboss) {
+        if (enemy.isDead() && enemy.deathAnimationFinished) {
+          this.gameWon = true;
+        }
+        return true;
+      } else {
+        if (enemy.isDead() && enemy.deathAnimationFinished) {
+          return false;
+        }
+        return true;
       }
-      return true;
     });
+
+    if (this.character.isDead() && this.character.deathAnimationFinished) {
+      this.gameOver = true;
+    }
   }
 
   checkEndbossActivation() {
@@ -251,5 +281,17 @@ class World {
     });
 
     this.level.bottles = this.level.bottles.filter((b) => !b.markedForDeletion);
+  }
+
+  showEndScreen() {
+    let img = this.gameOver ? this.gameOverImg : this.gameWonImg;
+
+    this.ctx.drawImage(
+      img,
+      this.canvas.width - 1080,
+      this.canvas.height - 600,
+      1080,
+      600
+    );
   }
 }

@@ -15,6 +15,7 @@ class Character extends MovableObject {
   jumpAnimationInterval;
   lastActionTime = Date.now();
   isLongIdle = false;
+  deathAnimationFinished = false;
   IMAGES_WALKING = [
     "../img/2_character_pepe/2_walk/W-21.png",
     "../img/2_character_pepe/2_walk/W-22.png",
@@ -57,7 +58,6 @@ class Character extends MovableObject {
     "../img/2_character_pepe/5_dead/D-54.png",
     "../img/2_character_pepe/5_dead/D-55.png",
     "../img/2_character_pepe/5_dead/D-56.png",
-    "../img/2_character_pepe/5_dead/D-57.png",
   ];
   IMAGES_HURT = [
     "../img/2_character_pepe/4_hurt/H-41.png",
@@ -85,6 +85,9 @@ class Character extends MovableObject {
 
   animate() {
     setInterval(() => {
+      if (this.isDead()) {
+        return;
+      }
       if (
         this.world.keyboard.RIGHT &&
         this.x < this.world.level.level_end_x &&
@@ -119,7 +122,7 @@ class Character extends MovableObject {
 
     setInterval(() => {
       if (this.isDead()) {
-        this.playAnimation(this.IMAGES_DEAD);
+        this.playDeathAnimation();
       } else if (this.gettingHit || this.isHurt()) {
         this.playAnimation(this.IMAGES_HURT);
       } else if (this.isAboveGround()) {
@@ -169,5 +172,30 @@ class Character extends MovableObject {
         this.gettingHit = false;
       }, 500);
     }
+  }
+
+  playDeathAnimation() {
+    if (this.deathAnimationPlaying) {
+      return;
+    }
+    this.deathAnimationPlaying = true;
+
+    this.speedY = 48;
+
+    let frame = 0;
+    clearInterval(this.walkInterval);
+    clearInterval(this.hurtInterval);
+
+    this.deathInterval = setInterval(() => {
+      if (frame < this.IMAGES_DEAD.length) {
+        this.img = this.imageCache[this.IMAGES_DEAD[frame]];
+        frame++;
+      } else {
+        clearInterval(this.deathInterval);
+        this.deathAnimationFinished = true;
+        this.img =
+          this.imageCache[this.IMAGES_DEAD[this.IMAGES_DEAD.length - 1]];
+      }
+    }, 100);
   }
 }

@@ -10,6 +10,7 @@ class Chicken extends MovableObject {
   energy = 1;
   movementInterval;
   animationInterval;
+  deathAnimationFinished = false;
 
   IMAGES_WALKING = [
     "../img/3_enemies_chicken/chicken_normal/1_walk/1_w.png",
@@ -50,7 +51,7 @@ class Chicken extends MovableObject {
   showDeadImage() {
     this.img = this.imageCache[this.IMAGES_DEAD[0]];
     setTimeout(() => {
-      this.markedForDeletion = true;
+      this.deathAnimationFinished = true;
     }, 300);
   }
 }

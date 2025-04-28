@@ -8,6 +8,7 @@ class Endboss extends MovableObject {
     right: 70,
   };
   bottleHits = 0;
+  deathAnimationFinished = false;
   world;
   IMAGES_WALKING = [
     "img/4_enemie_boss_chicken/1_walk/G1.png",
@@ -121,8 +122,10 @@ class Endboss extends MovableObject {
 
       if (frame >= this.IMAGES_DEAD.length) {
         clearInterval(this.deathInterval);
-        this.markedForDeletion = true;
+        this.img =
+          this.imageCache[this.IMAGES_DEAD[this.IMAGES_DEAD.length - 1]];
+        this.deathAnimationFinished = true;
       }
-    }, 250);
+    }, 200);
   }
 }
