@@ -81,7 +81,11 @@ class Endboss extends MovableObject {
   hitByBottle() {
     this.bottleHits++;
 
-    let frame = 0;
+    let remainingLife = Math.max(0, 100 - this.bottleHits * 20);
+    if (this.world && this.world.endbossBar) {
+      this.world.endbossBar.setPercentage(remainingLife);
+    }
+
     clearInterval(this.alertInterval);
     clearInterval(this.walkAnimInterval);
     clearInterval(this.walkInterval);
@@ -90,6 +94,7 @@ class Endboss extends MovableObject {
       this.die();
     }
 
+    let frame = 0;
     this.hurtInterval = setInterval(() => {
       this.img = this.imageCache[this.IMAGES_HURT[frame]];
       frame++;

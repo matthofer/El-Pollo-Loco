@@ -9,6 +9,7 @@ class World {
   statusBar = new StatusBar();
   bottleBar = new BottleBar();
   coinBar = new CoinBar();
+  endbossBar = new EndbossBar();
   throwableObjects = [];
   lastThrowTime = 0;
   collectedCoins = 0;
@@ -27,6 +28,11 @@ class World {
     this.character.world = this;
     this.totalCoins = this.level.coins.length;
     this.totalBottles = this.level.bottles.length;
+    this.level.enemies.forEach((enemy) => {
+      if (enemy instanceof Endboss) {
+        enemy.world = this;
+      }
+    });
   }
 
   run() {
@@ -36,6 +42,7 @@ class World {
       this.checkThrowableCollisions();
       this.checkDeathsAfterCollision();
       this.checkEndbossActivation();
+      this.updateEndbossBarVisibility();
       this.collectCoins();
       this.collectBottles();
     }, 10);
@@ -133,6 +140,9 @@ class World {
     this.addToMap(this.statusBar);
     this.addToMap(this.bottleBar);
     this.addToMap(this.coinBar);
+    if (this.endbossBar.visible) {
+      this.addToMap(this.endbossBar);
+    }
 
     let self = this;
     requestAnimationFrame(function () {
@@ -196,6 +206,24 @@ class World {
         boss.hadFirstContact = true;
         boss.startAlert();
       }
+    }
+  }
+
+  updateEndbossBarVisibility() {
+    const endboss = this.level.enemies.find((e) => e instanceof Endboss);
+
+    if (!endboss) {
+      this.endbossBar.visible = false;
+      return;
+    }
+
+    const screenLeft = -this.camera_x;
+    const screenRight = screenLeft + this.canvas.width;
+
+    if (endboss.x + endboss.width > screenLeft && endboss.x < screenRight) {
+      this.endbossBar.visible = true;
+    } else {
+      this.endbossBar.visible = false;
     }
   }
 
