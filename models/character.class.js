@@ -125,6 +125,7 @@ class Character extends MovableObject {
         this.playDeathAnimation();
       } else if (this.gettingHit || this.isHurt()) {
         this.playAnimation(this.IMAGES_HURT);
+        this.lastActionTime = Date.now();
       } else if (this.isAboveGround()) {
         if (this.speedY > 0) {
           this.img = this.imageCache[this.IMAGE_JUMPING_UP];
@@ -153,7 +154,7 @@ class Character extends MovableObject {
         !this.isHurt()
       ) {
         const now = Date.now();
-        if (now - this.lastActionTime > 15000) {
+        if (now - this.lastActionTime > 10000) {
           this.playAnimation(this.IMAGES_LONG_IDLE);
           this.isLongIdle = true;
         } else {

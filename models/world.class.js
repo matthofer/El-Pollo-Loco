@@ -284,14 +284,21 @@ class World {
   }
 
   showEndScreen() {
-    let img = this.gameOver ? this.gameOverImg : this.gameWonImg;
+    if (this.character.isDead() && this.character.deathAnimationFinished) {
+      this.gameOver = true;
+      showEndScreen(false);
+      return;
+    }
 
-    this.ctx.drawImage(
-      img,
-      this.canvas.width - 1080,
-      this.canvas.height - 600,
-      1080,
-      600
-    );
+    this.level.enemies.forEach((enemy) => {
+      if (
+        enemy instanceof Endboss &&
+        enemy.isDead() &&
+        enemy.deathAnimationFinished
+      ) {
+        this.gameWon = true;
+        showEndScreen(true);
+      }
+    });
   }
 }

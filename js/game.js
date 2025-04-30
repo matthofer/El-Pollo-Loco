@@ -4,7 +4,10 @@ let keyboard = new Keyboard();
 
 function init() {
   showLoadingScreen();
-  loadGame().then(hideLoadingScreen);
+  Promise.all([
+    loadGame(),
+    new Promise((resolve) => setTimeout(resolve, 200)),
+  ]).then(hideLoadingScreen);
 }
 
 function startGame() {
@@ -35,6 +38,41 @@ function updateProgressBar(percent) {
 
 function updateProgressText(percent) {
   document.getElementById("loading-text").innerText = `${percent}%`;
+}
+
+function showEndScreen(won) {
+  const endScreen = document.getElementById("endScreen");
+  endScreen.classList.remove("win", "lose");
+  endScreen.classList.add(won ? "win" : "lose");
+  endScreen.style.display = "flex";
+}
+
+function restartGame() {
+  const endScreen = document.getElementById("endScreen");
+  endScreen.style.display = "none";
+  showLoadingScreen();
+  setTimeout(() => {
+    world = null;
+    canvas = null;
+    canvas = document.getElementById("canvas");
+    const ctx = canvas.getContext("2d");
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    initLevel();
+    world = new World(canvas, keyboard);
+    hideLoadingScreen();
+  }, 100);
+}
+
+function returnToStart() {
+  document.getElementById("endScreen").style.display = "none";
+  document.getElementById("startScreen").style.display = "flex";
+
+  if (world) {
+    const ctx = canvas.getContext("2d");
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    world = null;
+    canvas = null;
+  }
 }
 
 window.addEventListener("keydown", (e) => {
