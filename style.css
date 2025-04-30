@@ -19,6 +19,10 @@ body {
   background-repeat: no-repeat;
 }
 
+.d-none {
+  display: none;
+}
+
 h1 {
   font-size: 74px;
   color: rgb(233, 114, 58);
@@ -41,7 +45,6 @@ h1 {
 
 canvas {
   display: block;
-  background-color: black;
   position: absolute;
 }
 
@@ -155,11 +158,55 @@ canvas {
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
 }
 
+#rotationContainer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 9999;
+  background-color: #131313;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: opacity 0.25s ease-out;
+  opacity: 1;
+}
+
+#rotationContainer.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+#rotationContainer img {
+  width: 80%;
+  height: auto;
+}
+
 @keyframes pulse {
   from {
     opacity: 0.8;
   }
   to {
     opacity: 1;
+  }
+}
+
+@media only screen and (max-width: 1368px) {
+  canvas,
+  .game-container,
+  .start-screen,
+  #loading-screen,
+  .end-screen {
+    width: 100dvw;
+    height: 100dvh;
+  }
+
+  h1 {
+    display: none;
+  }
+
+  body {
+    background-image: none;
   }
 }

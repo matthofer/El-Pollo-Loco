@@ -3,6 +3,7 @@ let world;
 let keyboard = new Keyboard();
 
 function init() {
+  toggleScreenRotation();
   showLoadingScreen();
   Promise.all([
     loadGame(),
@@ -116,3 +117,26 @@ window.addEventListener("keyup", (e) => {
     keyboard.D = false;
   }
 });
+
+window.addEventListener("resize", toggleScreenRotation);
+window.addEventListener("orientationchange", toggleScreenRotation);
+
+function toggleScreenRotation() {
+  let rotateContainer = document.getElementById("rotationContainer");
+  let canvas = document.getElementById("canvas");
+  let rotationImage = document.getElementById("rotationImage");
+  if (window.matchMedia("(orientation: portrait)").matches) {
+    rotateContainer.classList.remove("hidden");
+    adjustCanvasSize(canvas, "100vw !important", "100vh !important");
+    rotationImage.classList.remove("d-none");
+  } else {
+    rotateContainer.classList.add("hidden");
+    adjustCanvasSize(canvas, "1080px !important", "600px !important");
+    rotationImage.classList.add("d-none");
+  }
+}
+
+function adjustCanvasSize(canvas, width, height) {
+  canvas.style.width = width;
+  canvas.style.height = height;
+}
