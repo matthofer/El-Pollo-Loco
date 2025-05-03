@@ -251,6 +251,7 @@ canvas {
   pointer-events: auto;
   outline: none;
   -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
 }
 
 @keyframes pulse {

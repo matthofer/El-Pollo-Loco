@@ -142,36 +142,43 @@ const rightButton = document.getElementById("rightBtn");
 const jumpButton = document.getElementById("jumpBtn");
 const bottleButton = document.getElementById("throwBtn");
 
-leftButton.addEventListener("touchstart", () => {
-  console.log("LEFT BUTTON PRESSED");
+leftButton.addEventListener("touchstart", (event) => {
+  event.preventDefault();
   keyboard.LEFT = true;
 });
 
-leftButton.addEventListener("touchend", () => {
+leftButton.addEventListener("touchend", (event) => {
+  event.preventDefault();
   keyboard.LEFT = false;
 });
 
-rightButton.addEventListener("touchstart", () => {
+rightButton.addEventListener("touchstart", (event) => {
+  event.preventDefault();
   keyboard.RIGHT = true;
 });
 
-rightButton.addEventListener("touchend", () => {
+rightButton.addEventListener("touchend", (event) => {
+  event.preventDefault();
   keyboard.RIGHT = false;
 });
 
-jumpButton.addEventListener("touchstart", () => {
+jumpButton.addEventListener("touchstart", (event) => {
+  event.preventDefault();
   keyboard.SPACE = true;
 });
 
-jumpButton.addEventListener("touchend", () => {
+jumpButton.addEventListener("touchend", (event) => {
+  event.preventDefault();
   keyboard.SPACE = false;
 });
 
-bottleButton.addEventListener("touchstart", () => {
+bottleButton.addEventListener("touchstart", (event) => {
+  event.preventDefault();
   keyboard.D = true;
 });
 
-bottleButton.addEventListener("touchend", () => {
+bottleButton.addEventListener("touchend", (event) => {
+  event.preventDefault();
   keyboard.D = false;
 });
 
