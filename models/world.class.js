@@ -61,7 +61,7 @@ class World {
 
   checkThrowObjects() {
     const now = Date.now();
-    const cooldown = 500;
+    const cooldown = 800;
 
     if (
       this.keyboard.D &&
@@ -217,6 +217,7 @@ class World {
       if (enemy instanceof Endboss) {
         if (enemy.isDead() && enemy.deathAnimationFinished) {
           this.gameWon = true;
+          playSound(GAME_WON_AUDIO);
         }
         return true;
       } else {

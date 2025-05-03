@@ -7,7 +7,7 @@ function init() {
   showLoadingScreen();
   Promise.all([
     loadGame(),
-    new Promise((resolve) => setTimeout(resolve, 200)),
+    new Promise((resolve) => setTimeout(resolve, 700)),
   ]).then(hideLoadingScreen);
 }
 
@@ -44,7 +44,6 @@ function updateProgressText(percent) {
 }
 
 function showEndScreen(won) {
-  playSound(GAME_WON_AUDIO);
   const endScreen = document.getElementById("endScreen");
   endScreen.classList.remove("win", "lose");
   endScreen.classList.add(won ? "win" : "lose");

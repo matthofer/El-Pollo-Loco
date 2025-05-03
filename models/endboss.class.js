@@ -150,7 +150,7 @@ class Endboss extends MovableObject {
       frame++;
 
       if (frame >= this.IMAGES_DEAD.length) {
-        this.world.character.speedY = 48;
+        this.world.character.speedY = 35;
         clearInterval(this.deathInterval);
         playSound(BOSS_DEAD_AUDIO);
         this.img =

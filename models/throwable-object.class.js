@@ -45,7 +45,7 @@ class ThrowableObject extends MovableObject {
       this.applyGravity();
       playSound(BOTTLE_THROW_AUDIO);
       this.throwInterval = setInterval(() => {
-        this.x += 15 * this.direction;
+        this.x += 20 * this.direction;
       }, 20);
     }
   }

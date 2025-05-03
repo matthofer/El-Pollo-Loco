@@ -1,6 +1,19 @@
-async function loadGame() {
-  const images = collectImagePaths();
-  await preloadImages(images);
+function loadGame() {
+  const imagePaths = collectImagePaths();
+  const soundPaths = collectSoundPaths();
+
+  const totalAssets = imagePaths.length + soundPaths.length;
+  const progress = {
+    loaded: 0,
+    total: totalAssets,
+    done: false,
+  };
+
+  return new Promise((resolve) => {
+    progress.resolve = resolve;
+    preloadImages(imagePaths, progress);
+    preloadSounds(soundPaths, progress);
+  });
 }
 
 function collectImagePaths() {
@@ -135,22 +148,55 @@ function collectImagePaths() {
   ];
 }
 
-function preloadImages(paths) {
-  return new Promise((resolve) => {
-    const progress = { loaded: 0, total: paths.length };
-    paths.forEach((path) => loadSingleImage(path, progress, resolve));
-  });
+function collectSoundPaths() {
+  return [
+    "../audio/jump.mp3",
+    "../audio/hurt.mp3",
+    "../audio/walk.mp3",
+    "../audio/throw.mp3",
+    "../audio/splash.mp3",
+    "../audio/chicken-hurt.mp3",
+    "../audio/chick-hurt.mp3",
+    "../audio/boss-hurt.mp3",
+    "../audio/boss-dead.mp3",
+    "../audio/boss-intro.mp3",
+    "../audio/boss-attack.mp3",
+    "../audio/game-lost.mp3",
+    "../audio/game-won.mp3",
+    "../audio/game.mp3",
+    "../audio/coin.mp3",
+    "../audio/bottle-collect.mp3",
+  ];
 }
 
-function loadSingleImage(path, progress, resolve) {
+function preloadImages(paths, progress) {
+  paths.forEach((path) => loadSingleImage(path, progress));
+}
+
+function loadSingleImage(path, progress) {
   const img = new Image();
   img.src = path;
-  img.onload = () => handleLoad(progress, resolve);
-  img.onerror = () => handleLoad(progress, resolve);
+  img.onload = () => handleLoad(progress);
+  img.onerror = () => handleLoad(progress);
 }
 
-function handleLoad(progress, resolve) {
+function preloadSounds(paths, progress) {
+  paths.forEach((path) => loadSingleSound(path, progress));
+}
+
+function loadSingleSound(path, progress) {
+  const audio = new Audio();
+  audio.src = path;
+  audio.oncanplaythrough = () => handleLoad(progress);
+  audio.onerror = () => handleLoad(progress);
+}
+
+function handleLoad(progress) {
   progress.loaded++;
   updateProgress(progress.loaded, progress.total);
-  if (progress.loaded === progress.total) resolve();
+
+  if (progress.loaded === progress.total && !progress.done) {
+    progress.done = true;
+    progress.resolve();
+  }
 }
