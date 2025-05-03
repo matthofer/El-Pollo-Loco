@@ -14,7 +14,25 @@ const GAME_AUDIO = new Audio("../audio/game.mp3");
 const HURT_AUDIO = new Audio("../audio/hurt.mp3");
 const JUMP_AUDIO = new Audio("../audio/jump.mp3");
 const WALK_AUDIO = new Audio("../audio/walk.mp3");
-let soundMuted = false;
+const allAudio = [
+  GAME_AUDIO,
+  WALK_AUDIO,
+  JUMP_AUDIO,
+  HURT_AUDIO,
+  CHICKEN_HURT_AUDIO,
+  CHICK_HURT_AUDIO,
+  BOSS_DEAD_AUDIO,
+  BOSS_HURT_AUDIO,
+  BOSS_ATTACK_AUDIO,
+  BOSS_INTRO_AUDIO,
+  GAME_WON_AUDIO,
+  GAME_LOST_AUDIO,
+  COIN_AUDIO,
+  BOTTLE_COLLECT_AUDIO,
+  BOTTLE_SPLASH_AUDIO,
+  BOTTLE_THROW_AUDIO,
+];
+let soundMuted = localStorage.getItem("soundMuted") === "true";
 
 function playSound(
   audio,
@@ -46,4 +64,37 @@ function playGameMusic() {
 
 function pauseGameMusic() {
   pauseSound(GAME_AUDIO);
+}
+
+function applyInitialMuteSetting() {
+  const muteBtn = document.getElementById("muteBtn");
+  if (soundMuted) {
+    muteBtn.src = "./img/10_icons/muted.svg";
+  } else {
+    muteBtn.src = "./img/10_icons/unmuted.svg";
+  }
+
+  allAudio.forEach((audio) => {
+    audio.muted = soundMuted;
+    if (soundMuted) audio.pause();
+  });
+}
+
+function toggleMute() {
+  soundMuted = !soundMuted;
+  localStorage.setItem("soundMuted", soundMuted);
+
+  const muteBtn = document.getElementById("muteBtn");
+  muteBtn.src = soundMuted
+    ? "./img/10_icons/muted.svg"
+    : "./img/10_icons/unmuted.svg";
+
+  allAudio.forEach((audio) => {
+    audio.muted = soundMuted;
+    if (soundMuted) audio.pause();
+  });
+
+  if (!soundMuted) {
+    playGameMusic();
+  }
 }

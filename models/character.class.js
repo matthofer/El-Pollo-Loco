@@ -91,13 +91,15 @@ class Character extends MovableObject {
   }
 
   handleMovement() {
-    setInterval(() => {
-      if (this.isDead()) return;
-      this.handleDirectionalInput();
-      this.handleJumpInput();
-      this.handleActionTimestamp();
-      this.world.camera_x = -this.x + 150;
-    }, 20);
+    intervalManager.register(
+      setInterval(() => {
+        if (this.isDead()) return;
+        this.handleDirectionalInput();
+        this.handleJumpInput();
+        this.handleActionTimestamp();
+        this.world.camera_x = -this.x + 150;
+      }, 20)
+    );
   }
 
   handleDirectionalInput() {
@@ -129,15 +131,17 @@ class Character extends MovableObject {
   }
 
   handleAnimation() {
-    setInterval(() => {
-      const isMoving = this.world.keyboard.RIGHT || this.world.keyboard.LEFT;
-      const onGround = !this.isAboveGround();
-      if (this.isDead()) this.playDeathAnimation();
-      else if (this.gettingHit || this.isHurt())
-        this.playAnimation(this.IMAGES_HURT);
-      else if (!onGround) this.handleJumping();
-      else this.handleWalking(isMoving);
-    }, 80);
+    intervalManager.register(
+      setInterval(() => {
+        const isMoving = this.world.keyboard.RIGHT || this.world.keyboard.LEFT;
+        const onGround = !this.isAboveGround();
+        if (this.isDead()) this.playDeathAnimation();
+        else if (this.gettingHit || this.isHurt())
+          this.playAnimation(this.IMAGES_HURT);
+        else if (!onGround) this.handleJumping();
+        else this.handleWalking(isMoving);
+      }, 80)
+    );
   }
 
   handleJumping() {
@@ -162,7 +166,9 @@ class Character extends MovableObject {
     this.playAnimation(this.IMAGES_WALKING);
     if (!this.isWalkingSoundPlaying) {
       this.isWalkingSoundPlaying = true;
-      this.walkSoundInterval = setInterval(() => this.playWalkSound(), 350);
+      intervalManager.register(
+        (this.walkSoundInterval = setInterval(() => this.playWalkSound(), 350))
+      );
     }
   }
 
@@ -188,19 +194,21 @@ class Character extends MovableObject {
   }
 
   handleIdle() {
-    setInterval(() => {
-      if (
-        !this.world.keyboard.RIGHT &&
-        !this.world.keyboard.LEFT &&
-        !this.world.keyboard.SPACE &&
-        !this.world.keyboard.D &&
-        !this.isDead() &&
-        !this.isAboveGround() &&
-        !this.isHurt()
-      ) {
-        this.playIdleAnimation();
-      }
-    }, 200);
+    intervalManager.register(
+      setInterval(() => {
+        if (
+          !this.world.keyboard.RIGHT &&
+          !this.world.keyboard.LEFT &&
+          !this.world.keyboard.SPACE &&
+          !this.world.keyboard.D &&
+          !this.isDead() &&
+          !this.isAboveGround() &&
+          !this.isHurt()
+        ) {
+          this.playIdleAnimation();
+        }
+      }, 200)
+    );
   }
 
   playIdleAnimation() {
@@ -236,15 +244,17 @@ class Character extends MovableObject {
 
   startDeathAnimationFrames() {
     let frame = 0;
-    this.deathInterval = setInterval(() => {
-      if (frame < this.IMAGES_DEAD.length) {
-        this.img = this.imageCache[this.IMAGES_DEAD[frame]];
-        frame++;
-      } else {
-        clearInterval(this.deathInterval);
-        this.deathAnimationFinished = true;
-        this.img = this.imageCache[this.IMAGES_DEAD.at(-1)];
-      }
-    }, 100);
+    intervalManager.register(
+      (this.deathInterval = setInterval(() => {
+        if (frame < this.IMAGES_DEAD.length) {
+          this.img = this.imageCache[this.IMAGES_DEAD[frame]];
+          frame++;
+        } else {
+          clearInterval(this.deathInterval);
+          this.deathAnimationFinished = true;
+          this.img = this.imageCache[this.IMAGES_DEAD.at(-1)];
+        }
+      }, 100))
+    );
   }
 }

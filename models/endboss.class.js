@@ -65,9 +65,11 @@ class Endboss extends MovableObject {
   startAlert() {
     if (this.alertInterval) return;
 
-    this.alertInterval = setInterval(() => {
-      this.playAnimation(this.IMAGES_ALERT);
-    }, 250);
+    intervalManager.register(
+      (this.alertInterval = setInterval(() => {
+        this.playAnimation(this.IMAGES_ALERT);
+      }, 250))
+    );
 
     setTimeout(() => {
       clearInterval(this.alertInterval);
@@ -78,14 +80,18 @@ class Endboss extends MovableObject {
   startWalking() {
     clearInterval(this.walkInterval);
 
-    this.walkInterval = setInterval(() => {
-      this.moveLeft();
-    }, 1000 / 60);
+    intervalManager.register(
+      (this.walkInterval = setInterval(() => {
+        this.moveLeft();
+      }, 1000 / 60))
+    );
 
     clearInterval(this.walkAnimInterval);
-    this.walkAnimInterval = setInterval(() => {
-      this.playAnimation(this.IMAGES_WALKING);
-    }, 1000 / 10);
+    intervalManager.register(
+      (this.walkAnimInterval = setInterval(() => {
+        this.playAnimation(this.IMAGES_WALKING);
+      }, 1000 / 10))
+    );
   }
 
   startAttackAnimation() {
@@ -95,16 +101,18 @@ class Endboss extends MovableObject {
     if (this.attackInterval || this.isDead()) return;
 
     let frame = 0;
-    this.attackInterval = setInterval(() => {
-      this.img = this.imageCache[this.IMAGES_ATTACK[frame]];
-      frame++;
+    intervalManager.register(
+      (this.attackInterval = setInterval(() => {
+        this.img = this.imageCache[this.IMAGES_ATTACK[frame]];
+        frame++;
 
-      if (frame >= this.IMAGES_ATTACK.length) {
-        clearInterval(this.attackInterval);
-        this.attackInterval = null;
-        this.startWalking();
-      }
-    }, 140);
+        if (frame >= this.IMAGES_ATTACK.length) {
+          clearInterval(this.attackInterval);
+          this.attackInterval = null;
+          this.startWalking();
+        }
+      }, 140))
+    );
   }
 
   hitByBottle() {
@@ -125,18 +133,20 @@ class Endboss extends MovableObject {
     }
 
     let frame = 0;
-    this.hurtInterval = setInterval(() => {
-      this.img = this.imageCache[this.IMAGES_HURT[frame]];
-      frame++;
+    intervalManager.register(
+      (this.hurtInterval = setInterval(() => {
+        this.img = this.imageCache[this.IMAGES_HURT[frame]];
+        frame++;
 
-      if (frame >= this.IMAGES_HURT.length) {
-        clearInterval(this.hurtInterval);
+        if (frame >= this.IMAGES_HURT.length) {
+          clearInterval(this.hurtInterval);
 
-        if (!this.isDead()) {
-          this.startWalking();
+          if (!this.isDead()) {
+            this.startWalking();
+          }
         }
-      }
-    }, 120);
+      }, 120))
+    );
   }
 
   die() {
@@ -145,18 +155,20 @@ class Endboss extends MovableObject {
     clearInterval(this.walkAnimInterval);
     clearInterval(this.walkInterval);
 
-    this.deathInterval = setInterval(() => {
-      this.img = this.imageCache[this.IMAGES_DEAD[frame]];
-      frame++;
+    intervalManager.register(
+      (this.deathInterval = setInterval(() => {
+        this.img = this.imageCache[this.IMAGES_DEAD[frame]];
+        frame++;
 
-      if (frame >= this.IMAGES_DEAD.length) {
-        this.world.character.speedY = 35;
-        clearInterval(this.deathInterval);
-        playSound(BOSS_DEAD_AUDIO);
-        this.img =
-          this.imageCache[this.IMAGES_DEAD[this.IMAGES_DEAD.length - 1]];
-        this.deathAnimationFinished = true;
-      }
-    }, 200);
+        if (frame >= this.IMAGES_DEAD.length) {
+          this.world.character.speedY = 35;
+          clearInterval(this.deathInterval);
+          playSound(BOSS_DEAD_AUDIO);
+          this.img =
+            this.imageCache[this.IMAGES_DEAD[this.IMAGES_DEAD.length - 1]];
+          this.deathAnimationFinished = true;
+        }
+      }, 200))
+    );
   }
 }

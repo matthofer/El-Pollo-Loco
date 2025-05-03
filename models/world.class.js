@@ -21,12 +21,6 @@ class World {
     this.ctx = canvas.getContext("2d");
     this.canvas = canvas;
     this.keyboard = keyboard;
-    this.gameOverImg = new Image();
-    this.gameOverImg.src =
-      "../img/9_intro_outro_screens/game_over/oh no you lost!.png";
-    this.gameWonImg = new Image();
-    this.gameWonImg.src =
-      "../img/9_intro_outro_screens/game_over/game over!.png";
     this.draw();
     this.setWorld();
     this.run();
@@ -37,26 +31,26 @@ class World {
     this.totalCoins = this.level.coins.length;
     this.totalBottles = this.level.bottles.length;
     this.level.enemies.forEach((enemy) => {
-      if (enemy instanceof Endboss) {
-        enemy.world = this;
-      }
+      enemy.world = this;
     });
   }
 
   run() {
-    setInterval(() => {
-      if (this.gameOver || this.gameWon) {
-        return;
-      }
-      this.checkThrowObjects();
-      this.checkCollisions();
-      this.checkThrowableCollisions();
-      this.checkDeathsAfterCollision();
-      this.checkEndbossActivation();
-      this.updateEndbossBarVisibility();
-      this.collectCoins();
-      this.collectBottles();
-    }, 10);
+    intervalManager.register(
+      setInterval(() => {
+        if (this.gameOver || this.gameWon) {
+          return;
+        }
+        this.checkThrowObjects();
+        this.checkCollisions();
+        this.checkThrowableCollisions();
+        this.checkDeathsAfterCollision();
+        this.checkEndbossActivation();
+        this.updateEndbossBarVisibility();
+        this.collectCoins();
+        this.collectBottles();
+      }, 10)
+    );
   }
 
   checkThrowObjects() {
@@ -167,7 +161,7 @@ class World {
 
     let self = this;
     if (!this.gameOver && !this.gameWon) {
-      requestAnimationFrame(function () {
+      this.animationFrameId = requestAnimationFrame(() => {
         self.draw();
         self.checkOtherDirection();
       });

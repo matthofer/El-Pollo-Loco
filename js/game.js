@@ -15,6 +15,7 @@ function startGame() {
   canvas = document.getElementById("canvas");
   initLevel();
   world = new World(canvas, keyboard);
+  document.getElementById("topBtnControl").style.display = "flex";
   GAME_AUDIO.currentTime = 0;
   playGameMusic();
 }
@@ -65,11 +66,13 @@ function restartGame() {
     world = new World(canvas, keyboard);
     hideLoadingScreen();
   }, 100);
+  intervalManager.clearAll();
 }
 
 function returnToStart() {
   document.getElementById("endScreen").style.display = "none";
   document.getElementById("startScreen").style.display = "flex";
+  document.getElementById("topBtnControl").style.display = "none";
 
   if (world) {
     const ctx = canvas.getContext("2d");
@@ -77,6 +80,21 @@ function returnToStart() {
     world = null;
     canvas = null;
   }
+  pauseSound(GAME_AUDIO);
+  intervalManager.clearAll();
+}
+
+function exitGame() {
+  if (world) {
+    intervalManager.clearAll();
+    world = null;
+  }
+
+  const ctx = document.getElementById("canvas").getContext("2d");
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  document.getElementById("startScreen").style.display = "flex";
+  document.getElementById("endScreen").style.display = "none";
 }
 
 window.addEventListener("keydown", (e) => {
@@ -143,3 +161,16 @@ function adjustCanvasSize(canvas, width, height) {
   canvas.style.width = width;
   canvas.style.height = height;
 }
+
+const intervalManager = {
+  intervals: [],
+
+  register(intervalId) {
+    this.intervals.push(intervalId);
+  },
+
+  clearAll() {
+    this.intervals.forEach(clearInterval);
+    this.intervals = [];
+  },
+};

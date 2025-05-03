@@ -33,12 +33,26 @@
     <script src="./js/game.js"></script>
     <script src="./js/preload.js"></script>
   </head>
-  <body onload="toggleScreenRotation()">
+  <body onload="toggleScreenRotation(), applyInitialMuteSetting()">
     <h1>El Pollo Loco</h1>
 
     <div class="game-container">
       <div class="content">
         <canvas id="canvas" width="1080" height="600"></canvas>
+      </div>
+      <div id="topBtnControl">
+        <img
+          id="muteBtn"
+          src="./img/10_icons/unmuted.svg"
+          alt="Toggle Sound"
+          onclick="toggleMute()"
+        />
+        <img
+          id="exitBtn"
+          src="./img/10_icons/exit.svg"
+          alt="Exit to Menu"
+          onclick="returnToStart()"
+        />
       </div>
       <div id="startScreen" class="start-screen">
         <div class="start-buttons">
