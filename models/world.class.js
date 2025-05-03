@@ -102,6 +102,10 @@ class World {
           this.character.jump();
         } else {
           if (!this.character.isHurt() && !this.character.gettingHit) {
+            if (enemy instanceof Endboss) {
+              enemy.startAttackAnimation();
+            }
+
             this.character.takingHit();
             this.statusBar.setPercentage(this.character.energy);
           }
@@ -234,6 +238,7 @@ class World {
       const distance = Math.abs(this.character.x - boss.x);
       if (distance < 600) {
         boss.hadFirstContact = true;
+        playSound(BOSS_INTRO_AUDIO);
         boss.startAlert();
       }
     }
