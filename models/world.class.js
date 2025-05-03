@@ -125,7 +125,7 @@ class World {
       this.level.enemies.forEach((enemy) => {
         if (bottle.isColliding(enemy) && !bottle.hasHit) {
           bottle.hasHit = true;
-          bottle.splash();
+          bottle.shatterBottle();
 
           if (enemy instanceof Endboss) {
             enemy.hitByBottle();

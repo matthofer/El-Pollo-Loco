@@ -43,6 +43,7 @@ class ThrowableObject extends MovableObject {
     if (!this.character.isDead()) {
       this.speedY = 10;
       this.applyGravity();
+      playSound(BOTTLE_THROW_AUDIO);
       this.throwInterval = setInterval(() => {
         this.x += 15 * this.direction;
       }, 20);
@@ -64,5 +65,10 @@ class ThrowableObject extends MovableObject {
         this.markedForDeletion = true;
       }
     }, 10);
+  }
+
+  shatterBottle() {
+    this.splash();
+    playSound(BOTTLE_SPLASH_AUDIO, { volume: 0.8 });
   }
 }

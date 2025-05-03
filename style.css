@@ -169,7 +169,7 @@ canvas {
   display: flex;
   justify-content: center;
   align-items: center;
-  transition: opacity 0.25s ease-out;
+  transition: opacity 0.25s ease-in-out;
   opacity: 1;
 }
 

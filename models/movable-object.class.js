@@ -30,8 +30,9 @@ class MovableObject extends DrawableObject {
         this.y = groundLevel;
         this.speedY = 0;
 
-        if (this instanceof ThrowableObject) {
-          this.splash();
+        if (this instanceof ThrowableObject && !this.hasHit) {
+          this.hasHit = true;
+          this.shatterBottle();
         }
 
         clearInterval(this.gravityInterval);

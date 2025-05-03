@@ -129,6 +129,7 @@ class Character extends MovableObject {
       } else if (this.isAboveGround()) {
         if (this.speedY > 0) {
           this.img = this.imageCache[this.IMAGE_JUMPING_UP];
+          playSound(JUMP_AUDIO, { volume: 0.8, timeout: true, time: 440 });
         } else if (this.speedY < 25 && this.speedY > -25) {
           this.img = this.imageCache[this.IMAGE_JUMPING_MID];
         } else {
@@ -169,6 +170,7 @@ class Character extends MovableObject {
     if (!this.gettingHit) {
       this.hit();
       this.gettingHit = true;
+      playSound(HURT_AUDIO, 0.8);
       setTimeout(() => {
         this.gettingHit = false;
       }, 500);
@@ -198,5 +200,6 @@ class Character extends MovableObject {
           this.imageCache[this.IMAGES_DEAD[this.IMAGES_DEAD.length - 1]];
       }
     }, 100);
+    playSound(GAME_LOST_AUDIO);
   }
 }

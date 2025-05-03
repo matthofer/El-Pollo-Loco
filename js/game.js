@@ -15,6 +15,8 @@ function startGame() {
   canvas = document.getElementById("canvas");
   initLevel();
   world = new World(canvas, keyboard);
+  GAME_AUDIO.currentTime = 0;
+  playGameMusic();
 }
 
 function showLoadingScreen() {
@@ -46,6 +48,7 @@ function showEndScreen(won) {
   endScreen.classList.remove("win", "lose");
   endScreen.classList.add(won ? "win" : "lose");
   endScreen.style.display = "flex";
+  pauseGameMusic();
 }
 
 function restartGame() {
