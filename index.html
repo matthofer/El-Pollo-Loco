@@ -30,7 +30,7 @@
     <script src="models/throwable-object.class.js"></script>
     <script src="./levels/level1.js"></script>
     <script src="./js/sounds.js"></script>
-    <script src="./js/game.js"></script>
+    <script src="./js/game.js" defer></script>
     <script src="./js/preload.js"></script>
   </head>
   <body onload="toggleScreenRotation(), applyInitialMuteSetting()">
@@ -43,15 +43,17 @@
       <div id="topBtnControl">
         <img
           id="muteBtn"
+          class="button"
           src="./img/10_icons/unmuted.svg"
           alt="Toggle Sound"
           onclick="toggleMute()"
         />
         <img
           id="exitBtn"
+          class="button"
           src="./img/10_icons/exit.svg"
           alt="Exit to Menu"
-          onclick="returnToStart()"
+          onclick="resetToStartScreen()"
         />
       </div>
       <div id="startScreen" class="start-screen">
@@ -63,12 +65,46 @@
           <button class="btn-start">Imprint</button>
         </div>
       </div>
+      <div id="bottomBtnControl">
+        <div class="bottomControl">
+          <img
+            id="leftBtn"
+            class="button"
+            src="./img/10_icons/left.svg"
+            alt="Left"
+            onclick=""
+          />
+          <img
+            id="rightBtn"
+            class="button"
+            src="./img/10_icons/right.svg"
+            alt="Right"
+            onclick=""
+          />
+        </div>
+        <div class="bottomControl">
+          <img
+            id="jumpBtn"
+            class="button"
+            src="./img/10_icons/up.svg"
+            alt="Jump"
+            onclick=""
+          />
+          <img
+            id="throwBtn"
+            class="button"
+            src="./img/10_icons/bottle-icon.png"
+            alt="Throw"
+            onclick=""
+          />
+        </div>
+      </div>
       <div id="endScreen" class="end-screen">
         <div class="start-buttons-bottom">
           <button class="btn-start btn-play" onclick="restartGame()">
             Restart
           </button>
-          <button class="btn-start btn-play" onclick="returnToStart()">
+          <button class="btn-start btn-play" onclick="resetToStartScreen()">
             Back to Start
           </button>
         </div>

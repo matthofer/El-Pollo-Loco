@@ -145,6 +145,13 @@ function collectImagePaths() {
     "../img/9_intro_outro_screens/game_over/game over!.png",
     "../img/9_intro_outro_screens/game_over/oh no you lost!.png",
     "../img/9_intro_outro_screens/start/startscreen_2.png",
+    "../img/10_icons/exit.svg",
+    "../img/10_icons/left.svg",
+    "../img/10_icons/muted.svg",
+    "../img/10_icons/unmuted.svg",
+    "../img/10_icons/right.svg",
+    "../img/10_icons/up.svg",
+    "../img/10_icons/bottle-icon.png",
   ];
 }
 

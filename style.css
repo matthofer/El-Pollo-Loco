@@ -103,7 +103,7 @@ canvas {
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
-  z-index: 2;
+  z-index: 1002;
 }
 
 .end-screen.win {
@@ -191,9 +191,11 @@ canvas {
   gap: 15px;
   z-index: 1001;
   display: none;
+  user-select: none;
+  -webkit-user-drag: none;
 }
 
-#topBtnControl img {
+#topBtnControl img.button {
   width: 36px;
   height: 36px;
   cursor: pointer;
@@ -202,6 +204,53 @@ canvas {
 
 #topBtnControl img:hover {
   transform: scale(1.1);
+}
+
+#bottomBtnControl {
+  position: absolute;
+  bottom: 12px;
+  left: 50px;
+  display: flex;
+  justify-content: space-between;
+  z-index: 1001;
+  width: 90%;
+  display: none;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.bottomControl {
+  display: flex;
+  gap: 30px;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.bottomControl img {
+  width: 40px;
+  height: 40px;
+  transition: transform 0.2s ease;
+  background-color: #ffa502;
+  border: #000 solid;
+  border-radius: 30px;
+}
+
+.bottomControl img:hover {
+  transform: scale(1.05);
+}
+
+#leftBtn,
+#rightBtn,
+#jumpBtn,
+#throwBtn {
+  user-select: none;
+  -webkit-user-drag: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  pointer-events: auto;
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
 }
 
 @keyframes pulse {

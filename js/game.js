@@ -16,6 +16,7 @@ function startGame() {
   initLevel();
   world = new World(canvas, keyboard);
   document.getElementById("topBtnControl").style.display = "flex";
+  updateBottomBtnControlVisibility();
   GAME_AUDIO.currentTime = 0;
   playGameMusic();
 }
@@ -69,32 +70,29 @@ function restartGame() {
   intervalManager.clearAll();
 }
 
-function returnToStart() {
-  document.getElementById("endScreen").style.display = "none";
-  document.getElementById("startScreen").style.display = "flex";
-  document.getElementById("topBtnControl").style.display = "none";
-
-  if (world) {
-    const ctx = canvas.getContext("2d");
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    world = null;
-    canvas = null;
-  }
-  pauseSound(GAME_AUDIO);
-  intervalManager.clearAll();
-}
-
-function exitGame() {
+function resetToStartScreen() {
   if (world) {
     intervalManager.clearAll();
     world = null;
   }
 
-  const ctx = document.getElementById("canvas").getContext("2d");
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  const canvas = document.getElementById("canvas");
+  if (canvas) {
+    const ctx = canvas.getContext("2d");
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+  }
+
+  document.getElementById("endScreen").style.display = "none";
+  document.getElementById("topBtnControl").style.display = "none";
+  document.getElementById("bottomBtnControl").style.display = "none";
 
   document.getElementById("startScreen").style.display = "flex";
-  document.getElementById("endScreen").style.display = "none";
+
+  pauseSound(GAME_AUDIO);
+  if (SLEEP_AUDIO) {
+    pauseSound(SLEEP_AUDIO);
+    SLEEP_AUDIO.currentTime = 0;
+  }
 }
 
 window.addEventListener("keydown", (e) => {
@@ -138,6 +136,59 @@ window.addEventListener("keyup", (e) => {
     keyboard.D = false;
   }
 });
+
+const leftButton = document.getElementById("leftBtn");
+const rightButton = document.getElementById("rightBtn");
+const jumpButton = document.getElementById("jumpBtn");
+const bottleButton = document.getElementById("throwBtn");
+
+leftButton.addEventListener("touchstart", () => {
+  console.log("LEFT BUTTON PRESSED");
+  keyboard.LEFT = true;
+});
+
+leftButton.addEventListener("touchend", () => {
+  keyboard.LEFT = false;
+});
+
+rightButton.addEventListener("touchstart", () => {
+  keyboard.RIGHT = true;
+});
+
+rightButton.addEventListener("touchend", () => {
+  keyboard.RIGHT = false;
+});
+
+jumpButton.addEventListener("touchstart", () => {
+  keyboard.SPACE = true;
+});
+
+jumpButton.addEventListener("touchend", () => {
+  keyboard.SPACE = false;
+});
+
+bottleButton.addEventListener("touchstart", () => {
+  keyboard.D = true;
+});
+
+bottleButton.addEventListener("touchend", () => {
+  keyboard.D = false;
+});
+
+window.addEventListener("resize", () => {
+  if (world) {
+    updateBottomBtnControlVisibility();
+  }
+});
+
+function updateBottomBtnControlVisibility() {
+  const isMobile =
+    (window.innerWidth <= 1368 && "ontouchstart" in window) ||
+    navigator.maxTouchPoints > 0;
+
+  const btn = document.getElementById("bottomBtnControl");
+  btn.style.display = isMobile ? "flex" : "none";
+}
 
 window.addEventListener("resize", toggleScreenRotation);
 window.addEventListener("orientationchange", toggleScreenRotation);
