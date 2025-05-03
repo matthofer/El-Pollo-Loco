@@ -44,6 +44,7 @@ function updateProgressText(percent) {
 }
 
 function showEndScreen(won) {
+  playSound(GAME_WON_AUDIO);
   const endScreen = document.getElementById("endScreen");
   endScreen.classList.remove("win", "lose");
   endScreen.classList.add(won ? "win" : "lose");

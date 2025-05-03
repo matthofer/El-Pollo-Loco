@@ -1,4 +1,5 @@
 const BOSS_DEAD_AUDIO = new Audio("../audio/boss-dead.mp3");
+const BOSS_HURT_AUDIO = new Audio("../audio/boss-hurt.mp3");
 const BOSS_ATTACK_AUDIO = new Audio("../audio/boss-attack.mp3");
 const BOSS_INTRO_AUDIO = new Audio("../audio/boss-intro.mp3");
 const BOTTLE_COLLECT_AUDIO = new Audio("../audio/bottle-collect.mp3");

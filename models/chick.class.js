@@ -9,6 +9,7 @@ class Chick extends MovableObject {
   };
   energy = 1;
   deathAnimationFinished = false;
+  hasPlayedDeathSound = false;
   movementInterval;
   animationInterval;
   IMAGES_WALKING = [
@@ -39,6 +40,12 @@ class Chick extends MovableObject {
     this.animationInterval = setInterval(() => {
       if (this.isDead()) {
         this.showDeadImage();
+        if (!this.hasPlayedDeathSound) {
+          let deathSound = new Audio("../audio/chick-hurt.mp3");
+          deathSound.volume = 0.7;
+          deathSound.play();
+          this.hasPlayedDeathSound = true;
+        }
       } else {
         this.playAnimation(this.IMAGES_WALKING);
       }

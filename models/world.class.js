@@ -264,6 +264,7 @@ class World {
         this.collectedCoins++;
         let percentage = (this.collectedCoins / this.totalCoins) * 100;
         this.coinBar.setPercentage(percentage);
+        playSound(COIN_AUDIO);
       }
     });
 
@@ -277,6 +278,7 @@ class World {
         this.collectedBottles++;
         let percentage = (this.collectedBottles / this.totalBottles) * 100;
         this.bottleBar.setPercentage(percentage);
+        playSound(BOTTLE_COLLECT_AUDIO);
       }
     });
 

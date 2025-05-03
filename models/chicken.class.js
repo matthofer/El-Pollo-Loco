@@ -11,6 +11,7 @@ class Chicken extends MovableObject {
   movementInterval;
   animationInterval;
   deathAnimationFinished = false;
+  hasPlayedDeathSound = false;
 
   IMAGES_WALKING = [
     "../img/3_enemies_chicken/chicken_normal/1_walk/1_w.png",
@@ -42,6 +43,13 @@ class Chicken extends MovableObject {
     this.animationInterval = setInterval(() => {
       if (this.isDead()) {
         this.showDeadImage();
+
+        if (!this.hasPlayedDeathSound) {
+          const deathSound = new Audio("../audio/chicken-hurt.mp3");
+          deathSound.volume = 0.7;
+          deathSound.play();
+          this.hasPlayedDeathSound = true;
+        }
       } else {
         this.playAnimation(this.IMAGES_WALKING);
       }
