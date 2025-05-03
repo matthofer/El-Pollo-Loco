@@ -154,6 +154,7 @@ class Endboss extends MovableObject {
     let frame = 0;
     clearInterval(this.walkAnimInterval);
     clearInterval(this.walkInterval);
+    this.world.character.speedY = 35;
 
     intervalManager.register(
       (this.deathInterval = setInterval(() => {
@@ -161,7 +162,6 @@ class Endboss extends MovableObject {
         frame++;
 
         if (frame >= this.IMAGES_DEAD.length) {
-          this.world.character.speedY = 35;
           clearInterval(this.deathInterval);
           playSound(BOSS_DEAD_AUDIO);
           this.img =

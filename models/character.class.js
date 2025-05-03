@@ -17,6 +17,7 @@ class Character extends MovableObject {
   isLongIdle = false;
   deathAnimationFinished = false;
   isWalkingSoundPlaying = false;
+  isSleepingSoundPlaying = false;
   IMAGES_WALKING = [
     "../img/2_character_pepe/2_walk/W-21.png",
     "../img/2_character_pepe/2_walk/W-22.png",
@@ -50,8 +51,8 @@ class Character extends MovableObject {
     "../img/2_character_pepe/1_idle/long_idle/I-20.png",
   ];
   IMAGE_JUMPING_UP = "../img/2_character_pepe/3_jump/J-35.png";
-  IMAGE_JUMPING_MID = "../img/2_character_pepe/3_jump/J-37.png";
-  IMAGE_JUMPING_DOWN = "../img/2_character_pepe/3_jump/J-38.png";
+  IMAGE_JUMPING_MID = "../img/2_character_pepe/3_jump/J-36.png";
+  IMAGE_JUMPING_DOWN = "../img/2_character_pepe/3_jump/J-37.png";
   IMAGES_DEAD = [
     "../img/2_character_pepe/5_dead/D-51.png",
     "../img/2_character_pepe/5_dead/D-52.png",
@@ -214,9 +215,30 @@ class Character extends MovableObject {
   playIdleAnimation() {
     const now = Date.now();
     const idleTooLong = now - this.lastActionTime > 10000;
-    const images = idleTooLong ? this.IMAGES_LONG_IDLE : this.IMAGES_IDLE;
+
+    if (idleTooLong !== this.isLongIdle) {
+      this.isLongIdle = idleTooLong;
+      this.updateIdleState();
+    }
+
+    const images = this.isLongIdle ? this.IMAGES_LONG_IDLE : this.IMAGES_IDLE;
     this.playAnimation(images);
-    this.isLongIdle = idleTooLong;
+  }
+
+  updateIdleState() {
+    if (
+      this.isLongIdle &&
+      !this.sleepingSoundPlaying &&
+      !this.isDead() &&
+      !this.world.gameWon
+    ) {
+      playSound(SLEEP_AUDIO, { loop: true, volume: 0.1 });
+      this.sleepingSoundPlaying = true;
+    } else if (!this.isLongIdle && this.sleepingSoundPlaying) {
+      pauseSound(SLEEP_AUDIO);
+      SLEEP_AUDIO.currentTime = 0;
+      this.sleepingSoundPlaying = false;
+    }
   }
 
   takingHit() {

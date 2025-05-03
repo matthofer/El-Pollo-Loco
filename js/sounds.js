@@ -14,6 +14,7 @@ const GAME_AUDIO = new Audio("../audio/game.mp3");
 const HURT_AUDIO = new Audio("../audio/hurt.mp3");
 const JUMP_AUDIO = new Audio("../audio/jump.mp3");
 const WALK_AUDIO = new Audio("../audio/walk.mp3");
+const SLEEP_AUDIO = new Audio("../audio/sleeping.mp3");
 const allAudio = [
   GAME_AUDIO,
   WALK_AUDIO,
@@ -31,6 +32,7 @@ const allAudio = [
   BOTTLE_COLLECT_AUDIO,
   BOTTLE_SPLASH_AUDIO,
   BOTTLE_THROW_AUDIO,
+  SLEEP_AUDIO,
 ];
 let soundMuted = localStorage.getItem("soundMuted") === "true";
 
@@ -59,7 +61,7 @@ function pauseSound(audio) {
 }
 
 function playGameMusic() {
-  playSound(GAME_AUDIO, { timeout: false, time: 0, loop: true, volume: 0.2 });
+  playSound(GAME_AUDIO, { timeout: false, time: 0, loop: true, volume: 0.1 });
 }
 
 function pauseGameMusic() {
