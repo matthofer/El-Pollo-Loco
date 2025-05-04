@@ -28,12 +28,14 @@ h1 {
   color: rgb(233, 114, 58);
   text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
     1px 1px 0 #000;
+  letter-spacing: 2px;
 }
 
 .game-container {
   position: relative;
   width: 1080px;
   height: 600px;
+  letter-spacing: 1px;
 }
 
 .content {
@@ -278,6 +280,7 @@ h2 {
   color: rgb(233, 114, 58);
   text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
     1px 1px 0 #000;
+  letter-spacing: 2px;
 }
 
 h3 {
@@ -297,10 +300,79 @@ h4 {
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  letter-spacing: 1px;
 }
 
 .imprint-text {
   font-size: 30px;
+}
+
+.help-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  letter-spacing: 2px;
+}
+
+.help-text {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.help-text-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 10px;
+}
+
+.help-text-left,
+.help-text-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: max-content;
+  min-height: 60px;
+}
+
+.help-text-left {
+  justify-content: flex-end;
+  padding: 16px;
+  font-size: 16px;
+}
+
+.help-text-right {
+  justify-content: flex-start;
+  padding: 17px;
+  font-size: 20px;
+}
+
+.help-key-icons {
+  width: 40px;
+  height: 40px;
+  background-color: #d8d8d8;
+  border: #bdbdbd solid 2px;
+  border-radius: 10px;
+}
+
+.help-text-left p.help-key-icons {
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  font-weight: bold;
+}
+
+.space-key {
+  width: 80px;
+}
+
+.d-key {
+  width: 40px;
 }
 
 @keyframes pulse {
@@ -405,6 +477,28 @@ h4 {
     font-size: 28px;
     margin-top: 14px;
     margin-bottom: 10px;
+  }
+
+  .help-key-icons {
+    height: 34px !important;
+    width: 34px;
+  }
+
+  .space-key {
+    width: 50px;
+  }
+
+  .help-text-left {
+    font-size: 12px;
+    padding: 12px;
+  }
+
+  .help-text-right {
+    padding: 13px;
+  }
+
+  .help-text-container {
+    gap: 0;
   }
 }
 
