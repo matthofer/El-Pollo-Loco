@@ -196,18 +196,28 @@ window.addEventListener("resize", toggleScreenRotation);
 window.addEventListener("orientationchange", toggleScreenRotation);
 
 function toggleScreenRotation() {
-  let rotateContainer = document.getElementById("rotationContainer");
-  let canvas = document.getElementById("canvas");
-  let rotationImage = document.getElementById("rotationImage");
-  if (window.matchMedia("(orientation: portrait)").matches) {
-    rotateContainer.classList.remove("hidden");
-    adjustCanvasSize(canvas, "100vw !important", "100vh !important");
-    rotationImage.classList.remove("d-none");
+  const isPortrait = window.matchMedia("(orientation: portrait)").matches;
+  const canvas = document.getElementById("canvas");
+  const rotationContainer = document.getElementById("rotationContainer");
+  const rotationImage = document.getElementById("rotationImage");
+
+  if (isPortrait) {
+    showRotationPrompt(rotationContainer, canvas, rotationImage);
   } else {
-    rotateContainer.classList.add("hidden");
-    adjustCanvasSize(canvas, "1080px !important", "600px !important");
-    rotationImage.classList.add("d-none");
+    hideRotationPrompt(rotationContainer, canvas, rotationImage);
   }
+}
+
+function showRotationPrompt(container, canvas, image) {
+  container.classList.remove("hidden");
+  adjustCanvasSize(canvas, "100vw !important", "100vh !important");
+  image.classList.remove("d-none");
+}
+
+function hideRotationPrompt(container, canvas, image) {
+  container.classList.add("hidden");
+  adjustCanvasSize(canvas, "1080px !important", "600px !important");
+  image.classList.add("d-none");
 }
 
 function adjustCanvasSize(canvas, width, height) {

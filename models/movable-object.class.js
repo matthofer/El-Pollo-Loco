@@ -16,9 +16,7 @@ class MovableObject extends DrawableObject {
   applyGravity() {
     const groundLevel = this instanceof ThrowableObject ? 455 : 180;
 
-    if (this.isDead() && this.deathAnimationFinished) {
-      return;
-    }
+    if (this.isDead() && this.deathAnimationFinished) return;
 
     setInterval(() => {
       if (this.isAboveGround() || this.speedY > 0) {

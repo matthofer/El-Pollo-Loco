@@ -97,6 +97,10 @@ class Endboss extends MovableObject {
 
     if (this.attackInterval || this.isDead()) return;
 
+    this.animateAttack();
+  }
+
+  animateAttack() {
     let frame = 0;
     this.attackInterval = setInterval(() => {
       this.img = this.imageCache[this.IMAGES_ATTACK[frame]];
@@ -113,22 +117,30 @@ class Endboss extends MovableObject {
 
   hitByBottle() {
     this.bottleHits++;
-
     const remainingLife = Math.max(0, 100 - this.bottleHits * 10);
+
     if (this.world?.endbossBar) {
       this.world.endbossBar.setPercentage(remainingLife);
       playSound(BOSS_HURT_AUDIO);
     }
 
-    clearInterval(this.alertInterval);
-    clearInterval(this.walkAnimInterval);
-    clearInterval(this.walkInterval);
+    this.clearAllIntervals();
 
     if (this.bottleHits >= 10) {
       this.die();
       return;
     }
 
+    this.playHurtAnimation();
+  }
+
+  clearAllIntervals() {
+    clearInterval(this.alertInterval);
+    clearInterval(this.walkAnimInterval);
+    clearInterval(this.walkInterval);
+  }
+
+  playHurtAnimation() {
     let frame = 0;
     this.hurtInterval = setInterval(() => {
       this.img = this.imageCache[this.IMAGES_HURT[frame]];
@@ -145,16 +157,18 @@ class Endboss extends MovableObject {
   die() {
     this.energy = 0;
     this.world.character.speedY = 38;
-
     clearInterval(this.walkAnimInterval);
     clearInterval(this.walkInterval);
+    this.playDeathAnimation();
+  }
 
+  playDeathAnimation() {
     let frame = 0;
     this.deathInterval = setInterval(() => {
-      this.img = this.imageCache[this.IMAGES_DEAD[frame]];
-      frame++;
-
-      if (frame >= this.IMAGES_DEAD.length) {
+      if (frame < this.IMAGES_DEAD.length) {
+        this.img = this.imageCache[this.IMAGES_DEAD[frame]];
+        frame++;
+      } else {
         clearInterval(this.deathInterval);
         playSound(BOSS_DEAD_AUDIO);
         this.img = this.imageCache[this.IMAGES_DEAD.at(-1)];

@@ -136,16 +136,19 @@ class Character extends MovableObject {
 
   handleAnimation() {
     intervalManager.register(
-      setInterval(() => {
-        const isMoving = this.world.keyboard.RIGHT || this.world.keyboard.LEFT;
-        const onGround = !this.isAboveGround();
-        if (this.isDead()) this.playDeathAnimation();
-        else if (this.gettingHit || this.isHurt())
-          this.playAnimation(this.IMAGES_HURT);
-        else if (!onGround) this.handleJumping();
-        else this.handleWalking(isMoving);
-      }, 80)
+      setInterval(() => this.evaluateAnimationState(), 80)
     );
+  }
+
+  evaluateAnimationState() {
+    const isMoving = this.world.keyboard.RIGHT || this.world.keyboard.LEFT;
+    const onGround = !this.isAboveGround();
+
+    if (this.isDead()) this.playDeathAnimation();
+    else if (this.gettingHit || this.isHurt())
+      this.playAnimation(this.IMAGES_HURT);
+    else if (!onGround) this.handleJumping();
+    else this.handleWalking(isMoving);
   }
 
   handleJumping() {
@@ -216,7 +219,7 @@ class Character extends MovableObject {
 
   playIdleAnimation() {
     const now = Date.now();
-    const idleTooLong = now - this.lastActionTime > 10000;
+    const idleTooLong = now - this.lastActionTime > 12000;
 
     if (idleTooLong !== this.isLongIdle) {
       this.isLongIdle = idleTooLong;

@@ -85,18 +85,24 @@ function applyInitialMuteSetting() {
 function toggleMute() {
   soundMuted = !soundMuted;
   localStorage.setItem("soundMuted", soundMuted);
-
-  const muteBtn = document.getElementById("muteBtn");
-  muteBtn.src = soundMuted
-    ? "./img/10_icons/muted.svg"
-    : "./img/10_icons/unmuted.svg";
-
-  allAudio.forEach((audio) => {
-    audio.muted = soundMuted;
-    if (soundMuted) audio.pause();
-  });
+  updateMuteIcon();
+  updateAudioMuteState();
 
   if (!soundMuted) {
     playGameMusic();
   }
+}
+
+function updateMuteIcon() {
+  const muteBtn = document.getElementById("muteBtn");
+  muteBtn.src = soundMuted
+    ? "./img/10_icons/muted.svg"
+    : "./img/10_icons/unmuted.svg";
+}
+
+function updateAudioMuteState() {
+  allAudio.forEach((audio) => {
+    audio.muted = soundMuted;
+    if (soundMuted) audio.pause();
+  });
 }
