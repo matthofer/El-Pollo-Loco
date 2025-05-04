@@ -98,7 +98,7 @@ class Character extends MovableObject {
         this.handleDirectionalInput();
         this.handleJumpInput();
         this.handleActionTimestamp();
-        this.world.camera_x = -this.x + 150;
+        this.world.camera_x = -this.x + 250;
       }, 20)
     );
   }
@@ -115,7 +115,10 @@ class Character extends MovableObject {
   }
 
   handleJumpInput() {
-    if (this.world.keyboard.SPACE && !this.isAboveGround()) {
+    if (
+      (this.world.keyboard.SPACE || this.world.keyboard.UP) &&
+      !this.isAboveGround()
+    ) {
       this.jump();
     }
   }
@@ -167,9 +170,8 @@ class Character extends MovableObject {
     this.playAnimation(this.IMAGES_WALKING);
     if (!this.isWalkingSoundPlaying) {
       this.isWalkingSoundPlaying = true;
-      intervalManager.register(
-        (this.walkSoundInterval = setInterval(() => this.playWalkSound(), 350))
-      );
+      this.walkSoundInterval = setInterval(() => this.playWalkSound(), 350);
+      intervalManager.register(this.walkSoundInterval);
     }
   }
 
@@ -268,17 +270,16 @@ class Character extends MovableObject {
 
   startDeathAnimationFrames() {
     let frame = 0;
-    intervalManager.register(
-      (this.deathInterval = setInterval(() => {
-        if (frame < this.IMAGES_DEAD.length) {
-          this.img = this.imageCache[this.IMAGES_DEAD[frame]];
-          frame++;
-        } else {
-          clearInterval(this.deathInterval);
-          this.deathAnimationFinished = true;
-          this.img = this.imageCache[this.IMAGES_DEAD.at(-1)];
-        }
-      }, 100))
-    );
+    this.deathInterval = setInterval(() => {
+      if (frame < this.IMAGES_DEAD.length) {
+        this.img = this.imageCache[this.IMAGES_DEAD[frame]];
+        frame++;
+      } else {
+        clearInterval(this.deathInterval);
+        this.deathAnimationFinished = true;
+        this.img = this.imageCache[this.IMAGES_DEAD.at(-1)];
+      }
+    }, 100);
+    intervalManager.register(this.deathInterval);
   }
 }

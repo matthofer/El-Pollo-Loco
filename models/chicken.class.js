@@ -34,31 +34,29 @@ class Chicken extends MovableObject {
   }
 
   animate() {
-    intervalManager.register(
-      (this.movementInterval = setInterval(() => {
-        if (!this.isDead()) {
-          this.moveLeft();
-        }
-      }, 1000 / 60))
-    );
+    this.movementInterval = setInterval(() => {
+      if (!this.isDead()) {
+        this.moveLeft();
+      }
+    }, 1000 / 60);
+    intervalManager.register(this.movementInterval);
 
-    intervalManager.register(
-      (this.animationInterval = setInterval(() => {
-        if (this.isDead()) {
-          this.showDeadImage();
+    this.animationInterval = setInterval(() => {
+      if (this.isDead()) {
+        this.showDeadImage();
 
-          if (!this.hasPlayedDeathSound) {
-            const deathSound = new Audio("../audio/chicken-hurt.mp3");
-            deathSound.volume = 0.7;
-            deathSound.muted = soundMuted;
-            deathSound.play();
-            this.hasPlayedDeathSound = true;
-          }
-        } else {
-          this.playAnimation(this.IMAGES_WALKING);
+        if (!this.hasPlayedDeathSound) {
+          const deathSound = new Audio("../audio/chicken-hurt.mp3");
+          deathSound.volume = 0.7;
+          deathSound.muted = soundMuted;
+          deathSound.play();
+          this.hasPlayedDeathSound = true;
         }
-      }, 1000 / 13))
-    );
+      } else {
+        this.playAnimation(this.IMAGES_WALKING);
+      }
+    }, 1000 / 13);
+    intervalManager.register(this.animationInterval);
   }
 
   showDeadImage() {

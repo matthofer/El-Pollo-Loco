@@ -8,7 +8,10 @@ function init() {
   Promise.all([
     loadGame(),
     new Promise((resolve) => setTimeout(resolve, 700)),
-  ]).then(hideLoadingScreen);
+  ]).then(() => {
+    hideLoadingScreen();
+    startGame();
+  });
 }
 
 function startGame() {
@@ -28,7 +31,6 @@ function showLoadingScreen() {
 
 function hideLoadingScreen() {
   document.getElementById("loading-screen").style.display = "none";
-  startGame();
 }
 
 function updateProgress(current, total) {
@@ -54,34 +56,28 @@ function showEndScreen(won) {
 }
 
 function restartGame() {
-  const endScreen = document.getElementById("endScreen");
-  endScreen.style.display = "none";
+  document.getElementById("endScreen").style.display = "none";
   showLoadingScreen();
+  resetGame();
   setTimeout(() => {
-    world = null;
-    canvas = null;
-    canvas = document.getElementById("canvas");
-    const ctx = canvas.getContext("2d");
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    initLevel();
-    world = new World(canvas, keyboard);
+    startGame();
     hideLoadingScreen();
   }, 100);
-  intervalManager.clearAll();
 }
 
-function resetToStartScreen() {
+function resetGame() {
   if (world) {
+    world.destructor();
     intervalManager.clearAll();
     world = null;
   }
 
-  const canvas = document.getElementById("canvas");
-  if (canvas) {
-    const ctx = canvas.getContext("2d");
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-  }
+  const ctx = canvas.getContext("2d");
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+}
 
+function resetToStartScreen() {
+  resetGame();
   document.getElementById("endScreen").style.display = "none";
   document.getElementById("topBtnControl").style.display = "none";
   document.getElementById("bottomBtnControl").style.display = "none";
