@@ -254,6 +254,55 @@ canvas {
   -webkit-touch-callout: none;
 }
 
+.help-screen,
+.imprint-screen {
+  position: absolute;
+  display: none;
+  width: 100%;
+  height: 100%;
+  z-index: 100;
+  background-color: rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(28px);
+}
+
+.btn-container {
+  position: relative;
+  width: fit-content;
+  height: fit-content;
+  left: 24px;
+  top: 24px;
+}
+
+h2 {
+  font-size: 42px;
+  color: rgb(233, 114, 58);
+  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
+    1px 1px 0 #000;
+}
+
+h3 {
+  font-size: 38px;
+  margin-top: 18px;
+  margin-bottom: 18px;
+}
+
+h4 {
+  font-size: 34px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.imprint-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.imprint-text {
+  font-size: 30px;
+}
+
 @keyframes pulse {
   from {
     opacity: 0.8;

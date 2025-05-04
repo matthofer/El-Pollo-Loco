@@ -61,8 +61,38 @@
           <button class="btn-start btn-play" onclick="init()">Play</button>
         </div>
         <div class="start-buttons-bottom">
-          <button class="btn-start">Help</button>
-          <button class="btn-start">Imprint</button>
+          <button class="btn-start" onclick="showHelp()">Help</button>
+          <button class="btn-start" onclick="showImprint()">Imprint</button>
+        </div>
+      </div>
+      <div id="helpScreen" class="help-screen">
+        <div class="btn-container">
+          <button class="btn-start" onclick="closeHelp()">Back</button>
+        </div>
+        <div class="help-content">
+          <div class="help-header"></div>
+          <div class="help-text"></div>
+        </div>
+      </div>
+      <div id="imprintScreen" class="imprint-screen">
+        <div class="btn-container">
+          <button class="btn-start" onclick="closeImprint()">Back</button>
+        </div>
+        <div class="imprint-container">
+          <h2>Imprint & Privacy Policy</h1>
+          <div class="imprint-text">
+            <span
+              >This game was created by<br />Matthias Hofer<br />Paldau 321 /
+              3<br />8341 Paldau</span
+            >
+            <h4>Contact</h4>
+            <span>Phone: +43 650 28 23 069<br />E-Mail: hofer.matt@gmx.at</span>
+            <h3>Privacy Policy</h3>
+            <span
+              >No personal data is collected, stored, or processed during the
+              use of this game.</span
+            >
+          </div>
         </div>
       </div>
       <div id="bottomBtnControl">

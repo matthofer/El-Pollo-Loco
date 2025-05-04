@@ -227,3 +227,19 @@ const intervalManager = {
     this.intervals = [];
   },
 };
+
+function showHelp() {
+  document.getElementById("helpScreen").style.display = "block";
+}
+
+function closeHelp() {
+  document.getElementById("helpScreen").style.display = "none";
+}
+
+function showImprint() {
+  document.getElementById("imprintScreen").style.display = "block";
+}
+
+function closeImprint() {
+  document.getElementById("imprintScreen").style.display = "none";
+}
