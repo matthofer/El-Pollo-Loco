@@ -67,7 +67,6 @@ function restartGame() {
 
 function resetGame() {
   if (world) {
-    world.destructor();
     intervalManager.clearAll();
     world = null;
   }

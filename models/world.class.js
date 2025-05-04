@@ -303,32 +303,4 @@ class World {
       }
     });
   }
-
-  destructor() {
-    this.ctx = null;
-    this.canvas = null;
-    this.keyboard = null;
-    this.destroyCharacter();
-    this.destroyBars();
-    this.collectedCoins = 0;
-    this.collectedBottles = 0;
-    this.destroyThrowableObject();
-    this.level = [];
-  }
-
-  destroyThrowableObject() {
-    this.throwableObjects = [];
-    this.lastThrowTime = 0;
-  }
-
-  destroyCharacter() {
-    this.character = null;
-  }
-
-  destroyBars() {
-    this.statusBar = null;
-    this.coinBar = null;
-    this.bottleBar = null;
-    this.endbossBar = null;
-  }
 }
