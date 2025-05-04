@@ -6,7 +6,7 @@ class Cloud extends MovableObject {
     super().loadImage(
       "../img/5_background/layers/4_clouds/" + this.randomCloud() + ".png"
     );
-    this.x = Math.random() * 6474;
+    this.x = Math.random() * 8632;
     this.animate();
     this.width = 800;
     this.speed = 0.12 + Math.random() * 0.35;

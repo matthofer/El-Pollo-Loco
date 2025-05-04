@@ -41,7 +41,7 @@ class ThrowableObject extends MovableObject {
 
   throw() {
     if (!this.character.isDead()) {
-      this.speedY = 10;
+      this.speedY = 12;
       this.applyGravity();
       playSound(BOTTLE_THROW_AUDIO);
       this.throwInterval = setInterval(() => {

@@ -57,9 +57,9 @@ class Endboss extends MovableObject {
     this.loadImages(this.IMAGES_HURT);
     this.loadImages(this.IMAGES_DEAD);
     this.loadImages(this.IMAGES_ATTACK);
-    this.x = 5000;
+    this.x = 7900;
     this.y = 70;
-    this.speed = 1.8;
+    this.speed = 2;
   }
 
   startAlert() {
@@ -118,7 +118,7 @@ class Endboss extends MovableObject {
   hitByBottle() {
     this.bottleHits++;
 
-    let remainingLife = Math.max(0, 100 - this.bottleHits * 20);
+    let remainingLife = Math.max(0, 100 - this.bottleHits * 10);
     if (this.world && this.world.endbossBar) {
       this.world.endbossBar.setPercentage(remainingLife);
       playSound(BOSS_HURT_AUDIO);
@@ -128,7 +128,7 @@ class Endboss extends MovableObject {
     clearInterval(this.walkAnimInterval);
     clearInterval(this.walkInterval);
 
-    if (this.bottleHits >= 5) {
+    if (this.bottleHits >= 10) {
       this.die();
     }
 
@@ -154,7 +154,7 @@ class Endboss extends MovableObject {
     let frame = 0;
     clearInterval(this.walkAnimInterval);
     clearInterval(this.walkInterval);
-    this.world.character.speedY = 35;
+    this.world.character.speedY = 38;
 
     intervalManager.register(
       (this.deathInterval = setInterval(() => {

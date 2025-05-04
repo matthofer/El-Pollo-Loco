@@ -33,6 +33,9 @@ function initLevel() {
       new Cloud(),
       new Cloud(),
       new Cloud(),
+      new Cloud(),
+      new Cloud(),
+      new Cloud(),
     ]),
     (backgroundObjects = [
       new BackgroundObject("img/5_background/layers/air.png", -1079),
@@ -43,6 +46,8 @@ function initLevel() {
       new BackgroundObject("img/5_background/layers/air.png", 4316),
       new BackgroundObject("img/5_background/layers/air.png", 5395),
       new BackgroundObject("img/5_background/layers/air.png", 6474),
+      new BackgroundObject("img/5_background/layers/air.png", 7553),
+      new BackgroundObject("img/5_background/layers/air.png", 8632),
       new BackgroundObject(
         "img/5_background/layers/3_third_layer/2.png",
         -1080
@@ -124,6 +129,30 @@ function initLevel() {
         "img/5_background/layers/1_first_layer/1.png",
         1080 * 6
       ),
+      new BackgroundObject(
+        "img/5_background/layers/3_third_layer/2.png",
+        1080 * 7
+      ),
+      new BackgroundObject(
+        "img/5_background/layers/2_second_layer/2.png",
+        1080 * 7
+      ),
+      new BackgroundObject(
+        "img/5_background/layers/1_first_layer/2.png",
+        1080 * 7
+      ),
+      new BackgroundObject(
+        "img/5_background/layers/3_third_layer/1.png",
+        1080 * 8
+      ),
+      new BackgroundObject(
+        "img/5_background/layers/2_second_layer/1.png",
+        1080 * 8
+      ),
+      new BackgroundObject(
+        "img/5_background/layers/1_first_layer/1.png",
+        1080 * 8
+      ),
     ]),
     (coins = [
       new Coin(200, 150),
@@ -146,9 +175,27 @@ function initLevel() {
       new Coin(3550, 100),
       new Coin(3600, 150),
       new Coin(4000, 50),
+      new Coin(4200, 150),
+      new Coin(4250, 100),
+      new Coin(4300, 150),
+      new Coin(4600, 80),
+      new Coin(4650, 150),
+      new Coin(4700, 150),
+      new Coin(4750, 100),
+      new Coin(5100, 190),
+      new Coin(5350, 150),
+      new Coin(5400, 80),
+      new Coin(5600, 100),
+      new Coin(5650, 150),
+      new Coin(5700, 150),
+      new Coin(6000, 50),
+      new Coin(6300, 150),
+      new Coin(6350, 80),
+      new Coin(6600, 150),
+      new Coin(6650, 100),
+      new Coin(6700, 150),
     ]),
     (bottles = [
-      new Bottle(),
       new Bottle(),
       new Bottle(),
       new Bottle(),

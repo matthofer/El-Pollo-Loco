@@ -1,6 +1,6 @@
 class Bottle extends MovableObject {
   x =
-    440 + Math.floor(Math.random() * 4200) + Math.floor(Math.random() * 15 + 6);
+    440 + Math.floor(Math.random() * 6600) + Math.floor(Math.random() * 15 + 6);
   y = 445;
   width = 100;
   height = 90;
