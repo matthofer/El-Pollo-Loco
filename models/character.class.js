@@ -266,6 +266,8 @@ class Character extends MovableObject {
 
     this.startDeathAnimationFrames();
     playSound(GAME_LOST_AUDIO);
+    pauseSound(SLEEP_AUDIO);
+    SLEEP_AUDIO.currentTime = 0;
   }
 
   startDeathAnimationFrames() {
