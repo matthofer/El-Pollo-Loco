@@ -164,8 +164,8 @@ canvas {
   position: fixed;
   top: 0;
   left: 0;
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
   z-index: 9999;
   background-color: #131313;
   display: flex;
@@ -234,7 +234,7 @@ canvas {
   transition: transform 0.2s ease;
   background-color: #ffa502;
   border: #000 solid;
-  border-radius: 30px;
+  border-radius: 50px;
 }
 
 .bottomControl img:hover {
@@ -499,6 +499,15 @@ h4 {
 
   .help-text-container {
     gap: 0;
+  }
+
+  .btn-end {
+    padding: 8px 20px !important;
+  }
+
+  .end-buttons {
+    gap: 16px;
+    bottom: 30px;
   }
 }
 
