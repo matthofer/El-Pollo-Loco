@@ -4,7 +4,7 @@ class Character extends MovableObject {
   speed = 12;
   y = 0;
   offset = {
-    top: 130,
+    top: 160,
     bottom: 13,
     left: 35,
     right: 50,
@@ -245,9 +245,11 @@ class Character extends MovableObject {
     if (!this.gettingHit) {
       this.hit();
       this.gettingHit = true;
+      this.speed = 6;
       playSound(HURT_AUDIO, 0.8);
       setTimeout(() => {
         this.gettingHit = false;
+        this.speed = 12;
       }, 500);
     }
   }
