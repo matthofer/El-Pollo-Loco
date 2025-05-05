@@ -88,9 +88,9 @@ function pauseGameMusic() {
 function applyInitialMuteSetting() {
   const muteBtn = document.getElementById("muteBtn");
   if (soundMuted) {
-    muteBtn.src = "./img/10_icons/muted.svg";
+    muteBtn.src = "../img/10_icons/muted.svg";
   } else {
-    muteBtn.src = "./img/10_icons/unmuted.svg";
+    muteBtn.src = "../img/10_icons/unmuted.svg";
   }
 
   allAudio.forEach((audio) => {
@@ -119,8 +119,8 @@ function toggleMute() {
 function updateMuteIcon() {
   const muteBtn = document.getElementById("muteBtn");
   muteBtn.src = soundMuted
-    ? "./img/10_icons/muted.svg"
-    : "./img/10_icons/unmuted.svg";
+    ? "../img/10_icons/muted.svg"
+    : "../img/10_icons/unmuted.svg";
 }
 
 /**
