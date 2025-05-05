@@ -12,10 +12,10 @@ class Coin extends MovableObject {
   baseY;
   randomYOffset;
 
-  IMAGES_COIN = ["../img/8_coin/coin_1.png", "../img/8_coin/coin_2.png"];
+  IMAGES_COIN = ["img/8_coin/coin_1.png", "img/8_coin/coin_2.png"];
 
   constructor(x, y) {
-    super().loadImage("../img/8_coin/coin_1.png");
+    super().loadImage("img/8_coin/coin_1.png");
     this.loadImages(this.IMAGES_COIN);
     this.x = x + 500;
     this.randomYOffset =

@@ -14,16 +14,16 @@ class Chicken extends MovableObject {
   hasPlayedDeathSound = false;
 
   IMAGES_WALKING = [
-    "../img/3_enemies_chicken/chicken_normal/1_walk/1_w.png",
-    "../img/3_enemies_chicken/chicken_normal/1_walk/2_w.png",
-    "../img/3_enemies_chicken/chicken_normal/1_walk/3_w.png",
+    "img/3_enemies_chicken/chicken_normal/1_walk/1_w.png",
+    "img/3_enemies_chicken/chicken_normal/1_walk/2_w.png",
+    "img/3_enemies_chicken/chicken_normal/1_walk/3_w.png",
   ];
 
-  IMAGES_DEAD = ["../img/3_enemies_chicken/chicken_normal/2_dead/dead.png"];
+  IMAGES_DEAD = ["img/3_enemies_chicken/chicken_normal/2_dead/dead.png"];
 
   constructor() {
     super().loadImage(
-      "../img/3_enemies_chicken/chicken_normal/2_dead/dead.png"
+      "img/3_enemies_chicken/chicken_normal/2_dead/dead.png"
     );
     this.loadImages(this.IMAGES_WALKING);
     this.loadImages(this.IMAGES_DEAD);
@@ -68,7 +68,7 @@ class Chicken extends MovableObject {
   handleDeath() {
     this.showDeadImage();
     if (!this.hasPlayedDeathSound) {
-      const deathSound = new Audio("../audio/chicken-hurt.mp3");
+      const deathSound = new Audio("audio/chicken-hurt.mp3");
       deathSound.volume = 0.7;
       deathSound.muted = soundMuted;
       deathSound.play();

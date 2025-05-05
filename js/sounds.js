@@ -1,20 +1,20 @@
-const BOSS_DEAD_AUDIO = new Audio("../audio/boss-dead.mp3");
-const BOSS_HURT_AUDIO = new Audio("../audio/boss-hurt.mp3");
-const BOSS_ATTACK_AUDIO = new Audio("../audio/boss-attack.mp3");
-const BOSS_INTRO_AUDIO = new Audio("../audio/boss-intro.mp3");
-const BOTTLE_COLLECT_AUDIO = new Audio("../audio/bottle-collect.mp3");
-const BOTTLE_SPLASH_AUDIO = new Audio("../audio/splash.mp3");
-const BOTTLE_THROW_AUDIO = new Audio("../audio/throw.mp3");
-const CHICKEN_HURT_AUDIO = new Audio("../audio/chicken-hurt.mp3");
-const CHICK_HURT_AUDIO = new Audio("../audio/chick-hurt.mp3");
-const COIN_AUDIO = new Audio("../audio/coin.mp3");
-const GAME_LOST_AUDIO = new Audio("../audio/game-lost.mp3");
-const GAME_WON_AUDIO = new Audio("../audio/game-won.mp3");
-const GAME_AUDIO = new Audio("../audio/game.mp3");
-const HURT_AUDIO = new Audio("../audio/hurt.mp3");
-const JUMP_AUDIO = new Audio("../audio/jump.mp3");
-const WALK_AUDIO = new Audio("../audio/walk.mp3");
-const SLEEP_AUDIO = new Audio("../audio/sleeping.mp3");
+const BOSS_DEAD_AUDIO = new Audio("audio/boss-dead.mp3");
+const BOSS_HURT_AUDIO = new Audio("audio/boss-hurt.mp3");
+const BOSS_ATTACK_AUDIO = new Audio("audio/boss-attack.mp3");
+const BOSS_INTRO_AUDIO = new Audio("audio/boss-intro.mp3");
+const BOTTLE_COLLECT_AUDIO = new Audio("audio/bottle-collect.mp3");
+const BOTTLE_SPLASH_AUDIO = new Audio("audio/splash.mp3");
+const BOTTLE_THROW_AUDIO = new Audio("audio/throw.mp3");
+const CHICKEN_HURT_AUDIO = new Audio("audio/chicken-hurt.mp3");
+const CHICK_HURT_AUDIO = new Audio("audio/chick-hurt.mp3");
+const COIN_AUDIO = new Audio("audio/coin.mp3");
+const GAME_LOST_AUDIO = new Audio("audio/game-lost.mp3");
+const GAME_WON_AUDIO = new Audio("audio/game-won.mp3");
+const GAME_AUDIO = new Audio("audio/game.mp3");
+const HURT_AUDIO = new Audio("audio/hurt.mp3");
+const JUMP_AUDIO = new Audio("audio/jump.mp3");
+const WALK_AUDIO = new Audio("audio/walk.mp3");
+const SLEEP_AUDIO = new Audio("audio/sleeping.mp3");
 const allAudio = [
   GAME_AUDIO,
   WALK_AUDIO,
@@ -88,9 +88,9 @@ function pauseGameMusic() {
 function applyInitialMuteSetting() {
   const muteBtn = document.getElementById("muteBtn");
   if (soundMuted) {
-    muteBtn.src = "../img/10_icons/muted.svg";
+    muteBtn.src = "img/10_icons/muted.svg";
   } else {
-    muteBtn.src = "../img/10_icons/unmuted.svg";
+    muteBtn.src = "img/10_icons/unmuted.svg";
   }
 
   allAudio.forEach((audio) => {
@@ -119,8 +119,8 @@ function toggleMute() {
 function updateMuteIcon() {
   const muteBtn = document.getElementById("muteBtn");
   muteBtn.src = soundMuted
-    ? "../img/10_icons/muted.svg"
-    : "../img/10_icons/unmuted.svg";
+    ? "img/10_icons/muted.svg"
+    : "img/10_icons/unmuted.svg";
 }
 
 /**
