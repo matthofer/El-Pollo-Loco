@@ -36,14 +36,18 @@ const allAudio = [
 ];
 let soundMuted = localStorage.getItem("soundMuted") === "true";
 
-function playSound(
-  audio,
-  { timeout = false, time = 0, loop = false, volume = 1.0 } = {}
-) {
+/**
+ * Plays a sound with optional loop, timeout, and volume settings.
+ * @param {HTMLAudioElement} audio - The audio object to play.
+ * @param {Object} [options={}] - Optional config.
+ * @param {boolean} [options.timeout=false] - If true, stop after time.
+ * @param {number} [options.time=0] - Time to play in ms.
+ * @param {boolean} [options.loop=false] - Loop playback.
+ * @param {number} [options.volume=1.0] - Volume level.
+ */
+function playSound(audio, { timeout = false, time = 0, loop = false, volume = 1.0 } = {}) {
   if (!audio || soundMuted) return;
-
   audio.volume = volume;
-
   if (loop) {
     audio.loop = true;
     audio.play();
@@ -56,18 +60,31 @@ function playSound(
   }
 }
 
+/**
+ * Pauses the given sound.
+ * @param {HTMLAudioElement} audio
+ */
 function pauseSound(audio) {
   audio.pause();
 }
 
+/**
+ * Plays the background game music in a loop.
+ */
 function playGameMusic() {
   playSound(GAME_AUDIO, { timeout: false, time: 0, loop: true, volume: 0.1 });
 }
 
+/**
+ * Pauses the background game music.
+ */
 function pauseGameMusic() {
   pauseSound(GAME_AUDIO);
 }
 
+/**
+ * Applies initial mute state from localStorage to all audio elements.
+ */
 function applyInitialMuteSetting() {
   const muteBtn = document.getElementById("muteBtn");
   if (soundMuted) {
@@ -82,6 +99,9 @@ function applyInitialMuteSetting() {
   });
 }
 
+/**
+ * Toggles mute on/off and updates localStorage and UI.
+ */
 function toggleMute() {
   soundMuted = !soundMuted;
   localStorage.setItem("soundMuted", soundMuted);
@@ -93,6 +113,9 @@ function toggleMute() {
   }
 }
 
+/**
+ * Updates the mute icon depending on state.
+ */
 function updateMuteIcon() {
   const muteBtn = document.getElementById("muteBtn");
   muteBtn.src = soundMuted
@@ -100,6 +123,9 @@ function updateMuteIcon() {
     : "./img/10_icons/unmuted.svg";
 }
 
+/**
+ * Updates the muted state for all audio elements.
+ */
 function updateAudioMuteState() {
   allAudio.forEach((audio) => {
     audio.muted = soundMuted;

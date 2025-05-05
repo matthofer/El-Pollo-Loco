@@ -1,14 +1,8 @@
 function loadGame() {
   const imagePaths = collectImagePaths();
   const soundPaths = collectSoundPaths();
-
   const totalAssets = imagePaths.length + soundPaths.length;
-  const progress = {
-    loaded: 0,
-    total: totalAssets,
-    done: false,
-  };
-
+  const progress = { loaded: 0, total: totalAssets, done: false };
   return new Promise((resolve) => {
     progress.resolve = resolve;
     preloadImages(imagePaths, progress);
@@ -16,6 +10,10 @@ function loadGame() {
   });
 }
 
+/**
+ * Returns all image paths to preload.
+ * @returns {string[]}
+ */
 function collectImagePaths() {
   return [
     "../img/5_background/layers/1_first_layer/1.png",
@@ -145,6 +143,10 @@ function collectImagePaths() {
   ];
 }
 
+/**
+ * Returns all sound paths to preload.
+ * @returns {string[]}
+ */
 function collectSoundPaths() {
   return [
     "../audio/jump.mp3",
@@ -166,10 +168,18 @@ function collectSoundPaths() {
   ];
 }
 
+/**
+ * Starts image preloading.
+ * @param {string[]} paths
+ * @param {object} progress
+ */
 function preloadImages(paths, progress) {
   paths.forEach((path) => loadSingleImage(path, progress));
 }
 
+/**
+ * Loads a single image and updates progress.
+ */
 function loadSingleImage(path, progress) {
   const img = new Image();
   img.src = path;
@@ -177,10 +187,16 @@ function loadSingleImage(path, progress) {
   img.onerror = () => handleLoad(progress);
 }
 
+/**
+ * Starts sound preloading.
+ */
 function preloadSounds(paths, progress) {
   paths.forEach((path) => loadSingleSound(path, progress));
 }
 
+/**
+ * Loads a single sound and updates progress.
+ */
 function loadSingleSound(path, progress) {
   const audio = new Audio();
   audio.src = path;
@@ -188,6 +204,9 @@ function loadSingleSound(path, progress) {
   audio.onerror = () => handleLoad(progress);
 }
 
+/**
+ * Handles asset load and resolves once all are done.
+ */
 function handleLoad(progress) {
   progress.loaded++;
   updateProgress(progress.loaded, progress.total);

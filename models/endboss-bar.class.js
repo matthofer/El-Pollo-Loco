@@ -20,12 +20,20 @@ class EndbossBar extends DrawableObject {
     this.setPercentage(100);
   }
 
+  /**
+   * Sets the percentage value and updates the displayed image accordingly.
+   * @param {number} percentage - The current bottle percentage (0–100).
+   */
   setPercentage(percentage) {
     this.percentage = percentage;
     let path = this.IMAGES[this.resolveImageIndex()];
     this.img = this.imageCache[path];
   }
 
+  /**
+   * Resolves the image index based on the current percentage.
+   * @returns {number} - Index of the image to display.
+   */
   resolveImageIndex() {
     if (this.percentage >= 100) return 0;
     else if (this.percentage > 75) return 1;

@@ -33,11 +33,17 @@ class Chicken extends MovableObject {
     this.animate();
   }
 
+  /**
+   * Starts movement and animation loops.
+   */
   animate() {
     this.startMovement();
     this.startAnimation();
   }
 
+  /**
+   * Moves the chicken to the left if it's alive.
+   */
   startMovement() {
     this.movementInterval = setInterval(() => {
       if (!this.isDead()) this.moveLeft();
@@ -45,6 +51,9 @@ class Chicken extends MovableObject {
     intervalManager.register(this.movementInterval);
   }
 
+  /**
+   * Plays walking animation or handles death when dead.
+   */
   startAnimation() {
     this.animationInterval = setInterval(() => {
       if (this.isDead()) this.handleDeath();
@@ -53,6 +62,9 @@ class Chicken extends MovableObject {
     intervalManager.register(this.animationInterval);
   }
 
+  /**
+   * Handles death logic and plays death sound.
+   */
   handleDeath() {
     this.showDeadImage();
     if (!this.hasPlayedDeathSound) {
@@ -64,6 +76,9 @@ class Chicken extends MovableObject {
     }
   }
 
+  /**
+   * Displays dead image and marks animation as finished.
+   */
   showDeadImage() {
     this.img = this.imageCache[this.IMAGES_DEAD[0]];
     setTimeout(() => {

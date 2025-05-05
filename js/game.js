@@ -2,6 +2,9 @@ let canvas;
 let world;
 let keyboard = new Keyboard();
 
+/**
+ * Initializes the game with loading screen and asset preloading.
+ */
 function init() {
   toggleScreenRotation();
   showLoadingScreen();
@@ -14,6 +17,9 @@ function init() {
   });
 }
 
+/**
+ * Starts the game by initializing canvas, level, and world.
+ */
 function startGame() {
   canvas = document.getElementById("canvas");
   initLevel();
@@ -24,29 +30,52 @@ function startGame() {
   playGameMusic();
 }
 
+/**
+ * Displays the loading screen.
+ */
 function showLoadingScreen() {
   document.getElementById("loading-screen").style.display = "flex";
   document.getElementById("startScreen").style.display = "none";
 }
 
+/**
+ * Hides the loading screen.
+ */
 function hideLoadingScreen() {
   document.getElementById("loading-screen").style.display = "none";
 }
 
+/**
+ * Updates the loading bar and text during asset preload.
+ * @param {number} current - Number of assets loaded.
+ * @param {number} total - Total number of assets to load.
+ */
 function updateProgress(current, total) {
   const percent = Math.round((current / total) * 100);
   document.getElementById("loading-bar").style.width = `${percent}%`;
   document.getElementById("loading-text").innerText = `${percent}%`;
 }
 
+/**
+ * Updates the progress bar.
+ * @param {number} percent
+ */
 function updateProgressBar(percent) {
   document.getElementById("loading-bar").style.width = `${percent}%`;
 }
 
+/**
+ * Updates the loading text.
+ * @param {number} percent
+ */
 function updateProgressText(percent) {
   document.getElementById("loading-text").innerText = `${percent}%`;
 }
 
+/**
+ * Displays the end screen with win/loss result.
+ * @param {boolean} won - True if the player won.
+ */
 function showEndScreen(won) {
   const endScreen = document.getElementById("endScreen");
   endScreen.classList.remove("win", "lose");
@@ -55,6 +84,9 @@ function showEndScreen(won) {
   pauseGameMusic();
 }
 
+/**
+ * Restarts the game after game over/win.
+ */
 function restartGame() {
   document.getElementById("endScreen").style.display = "none";
   showLoadingScreen();
@@ -65,6 +97,9 @@ function restartGame() {
   }, 100);
 }
 
+/**
+ * Resets the world and canvas.
+ */
 function resetGame() {
   if (world) {
     intervalManager.clearAll();
@@ -75,6 +110,9 @@ function resetGame() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 }
 
+/**
+ * Resets the game and returns to the start screen.
+ */
 function resetToStartScreen() {
   resetGame();
   document.getElementById("endScreen").style.display = "none";
@@ -183,6 +221,9 @@ window.addEventListener("resize", () => {
   }
 });
 
+/**
+ * Adjusts button visibility on mobile devices.
+ */
 function updateBottomBtnControlVisibility() {
   const isMobile =
     (window.innerWidth <= 1368 && "ontouchstart" in window) ||
@@ -195,6 +236,9 @@ function updateBottomBtnControlVisibility() {
 window.addEventListener("resize", toggleScreenRotation);
 window.addEventListener("orientationchange", toggleScreenRotation);
 
+/**
+ * Toggles the screen rotation hint depending on orientation.
+ */
 function toggleScreenRotation() {
   const isPortrait = window.matchMedia("(orientation: portrait)").matches;
   const canvas = document.getElementById("canvas");
@@ -208,18 +252,27 @@ function toggleScreenRotation() {
   }
 }
 
+/**
+ * Shows the rotation prompt overlay.
+ */
 function showRotationPrompt(container, canvas, image) {
   container.classList.remove("hidden");
   adjustCanvasSize(canvas, "100vw !important", "100vh !important");
   image.classList.remove("d-none");
 }
 
+/**
+ * Hides the rotation prompt overlay.
+ */
 function hideRotationPrompt(container, canvas, image) {
   container.classList.add("hidden");
   adjustCanvasSize(canvas, "1080px !important", "600px !important");
   image.classList.add("d-none");
 }
 
+/**
+ * Sets canvas dimensions.
+ */
 function adjustCanvasSize(canvas, width, height) {
   canvas.style.width = width;
   canvas.style.height = height;
@@ -238,18 +291,30 @@ const intervalManager = {
   },
 };
 
+/**
+ * Shows the help screen.
+ */
 function showHelp() {
   document.getElementById("helpScreen").style.display = "block";
 }
 
+/**
+ * Hides the help screen.
+ */
 function closeHelp() {
   document.getElementById("helpScreen").style.display = "none";
 }
 
+/**
+ * Shows the imprint screen.
+ */
 function showImprint() {
   document.getElementById("imprintScreen").style.display = "block";
 }
 
+/**
+ * Hides the imprint screen.
+ */
 function closeImprint() {
   document.getElementById("imprintScreen").style.display = "none";
 }

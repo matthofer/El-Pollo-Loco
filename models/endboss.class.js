@@ -62,6 +62,9 @@ class Endboss extends MovableObject {
     this.speed = 2;
   }
 
+  /**
+   * Starts alert animation and then transitions to walking.
+   */
   startAlert() {
     if (this.alertInterval) return;
 
@@ -76,11 +79,12 @@ class Endboss extends MovableObject {
     }, 2000);
   }
 
+  /**
+   * Starts walking movement and animation intervals.
+   */
   startWalking() {
     clearInterval(this.walkInterval);
-    this.walkInterval = setInterval(() => {
-      this.moveLeft();
-    }, 1000 / 60);
+    this.walkInterval = setInterval(() => this.moveLeft(), 1000 / 60);
     intervalManager.register(this.walkInterval);
 
     clearInterval(this.walkAnimInterval);
@@ -90,16 +94,21 @@ class Endboss extends MovableObject {
     intervalManager.register(this.walkAnimInterval);
   }
 
+  /**
+   * Starts the attack animation of the endboss.
+   */
   startAttackAnimation() {
     clearInterval(this.walkInterval);
     clearInterval(this.walkAnimInterval);
     playSound(BOSS_ATTACK_AUDIO, { volume: 0.7 });
 
     if (this.attackInterval || this.isDead()) return;
-
     this.animateAttack();
   }
 
+  /**
+   * Plays the attack frames in sequence.
+   */
   animateAttack() {
     let frame = 0;
     this.attackInterval = setInterval(() => {
@@ -115,6 +124,9 @@ class Endboss extends MovableObject {
     intervalManager.register(this.attackInterval);
   }
 
+  /**
+   * Plays hurt or triggers death when hit with a bottle.
+   */
   hitByBottle() {
     this.bottleHits++;
     const remainingLife = Math.max(0, 100 - this.bottleHits * 10);
@@ -134,12 +146,18 @@ class Endboss extends MovableObject {
     this.playHurtAnimation();
   }
 
+  /**
+   * Clears all active movement/animation intervals.
+   */
   clearAllIntervals() {
     clearInterval(this.alertInterval);
     clearInterval(this.walkAnimInterval);
     clearInterval(this.walkInterval);
   }
 
+  /**
+   * Plays hurt animation when hit.
+   */
   playHurtAnimation() {
     let frame = 0;
     this.hurtInterval = setInterval(() => {
@@ -154,6 +172,9 @@ class Endboss extends MovableObject {
     intervalManager.register(this.hurtInterval);
   }
 
+  /**
+   * Sets energy to 0 and starts the death animation.
+   */
   die() {
     this.energy = 0;
     this.world.character.speedY = 38;
@@ -162,6 +183,9 @@ class Endboss extends MovableObject {
     this.playDeathAnimation();
   }
 
+  /**
+   * Plays the death animation and ends with victory sound.
+   */
   playDeathAnimation() {
     let frame = 0;
     this.deathInterval = setInterval(() => {

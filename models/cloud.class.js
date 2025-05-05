@@ -12,6 +12,9 @@ class Cloud extends MovableObject {
     this.speed = 0.12 + Math.random() * 0.35;
   }
 
+  /**
+   * Starts the movement animation.
+   */
   animate() {
     setInterval(() => {
       this.moveLeft();
@@ -21,6 +24,10 @@ class Cloud extends MovableObject {
     }, 1000 / 60);
   }
 
+  /**
+   * Returns a random cloud image number (1 or 2).
+   * @returns {number} - 1 or 2
+   */
   randomCloud() {
     return Math.floor(Math.random() * 2 + 1);
   }

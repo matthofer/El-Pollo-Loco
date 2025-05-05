@@ -33,12 +33,18 @@ class ThrowableObject extends MovableObject {
     this.animate();
   }
 
+  /**
+   * Starts the rotation animation of the bottle.
+   */
   animate() {
     this.rotationInterval = setInterval(() => {
       this.playAnimation(this.IMAGES_ROTATION);
     }, 50);
   }
 
+  /**
+   * Throws the object forward and applies gravity.
+   */
   throw() {
     if (!this.character.isDead()) {
       this.speedY = 12;
@@ -50,11 +56,13 @@ class ThrowableObject extends MovableObject {
     }
   }
 
+  /**
+   * Plays splash animation and marks object for deletion.
+   */
   splash() {
     clearInterval(this.throwInterval);
     clearInterval(this.gravityInterval);
     clearInterval(this.rotationInterval);
-
     let frame = 0;
     const splashAnim = setInterval(() => {
       if (frame < this.IMAGES_SPLASH.length) {
@@ -67,6 +75,9 @@ class ThrowableObject extends MovableObject {
     }, 10);
   }
 
+  /**
+   * Handles visual and audio effects when the bottle breaks.
+   */
   shatterBottle() {
     this.splash();
     playSound(BOTTLE_SPLASH_AUDIO, { volume: 0.8 });

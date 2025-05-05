@@ -85,12 +85,18 @@ class Character extends MovableObject {
     this.animate();
   }
 
+  /**
+   * Starts the core animation handlers.
+   */
   animate() {
     this.handleMovement();
     this.handleAnimation();
     this.handleIdle();
   }
 
+  /**
+   * Handles movement input and updates camera position.
+   */
   handleMovement() {
     intervalManager.register(
       setInterval(() => {
@@ -103,6 +109,9 @@ class Character extends MovableObject {
     );
   }
 
+  /**
+   * Checks directional input and moves character accordingly.
+   */
   handleDirectionalInput() {
     if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
       this.moveRight();
@@ -114,6 +123,9 @@ class Character extends MovableObject {
     }
   }
 
+  /**
+   * Checks if jump key is pressed and triggers jump if on ground.
+   */
   handleJumpInput() {
     if (
       (this.world.keyboard.SPACE || this.world.keyboard.UP) &&
@@ -123,23 +135,33 @@ class Character extends MovableObject {
     }
   }
 
+  /**
+   * Updates last action timestamp if movement/interaction keys are pressed.
+   */
   handleActionTimestamp() {
     if (
       this.world.keyboard.RIGHT ||
       this.world.keyboard.LEFT ||
       this.world.keyboard.SPACE ||
-      this.world.keyboard.D
+      this.world.keyboard.D ||
+      this.world.keyboard.UP
     ) {
       this.lastActionTime = Date.now();
     }
   }
 
+  /**
+   * Starts the character's animation state evaluation loop.
+   */
   handleAnimation() {
     intervalManager.register(
       setInterval(() => this.evaluateAnimationState(), 80)
     );
   }
 
+  /**
+   * Evaluates the character's animation state.
+   */
   evaluateAnimationState() {
     const isMoving = this.world.keyboard.RIGHT || this.world.keyboard.LEFT;
     const onGround = !this.isAboveGround();
@@ -151,6 +173,9 @@ class Character extends MovableObject {
     else this.handleWalking(isMoving);
   }
 
+  /**
+   * Handles the character's jumping animation and sound.
+   */
   handleJumping() {
     if (this.speedY > 0) {
       this.img = this.imageCache[this.IMAGE_JUMPING_UP];
@@ -163,12 +188,19 @@ class Character extends MovableObject {
     this.afterJump = true;
   }
 
+  /**
+   * Starts or stops walking animation and walking sound.
+   * @param {boolean} isMoving - true if the character is moving.
+   */
   handleWalking(isMoving) {
     if (isMoving) this.startWalking();
     else this.stopWalking();
     this.afterJump = false;
   }
 
+  /**
+   * Starts walking animation and sound.
+   */
   startWalking() {
     this.playAnimation(this.IMAGES_WALKING);
     if (!this.isWalkingSoundPlaying) {
@@ -178,10 +210,16 @@ class Character extends MovableObject {
     }
   }
 
+  /**
+   * Stops walking sound.
+   */
   stopWalking() {
     if (this.isWalkingSoundPlaying) this.stopWalkingSound();
   }
 
+  /**
+   * Clears walking sound interval and resets sound.
+   */
   stopWalkingSound() {
     clearInterval(this.walkSoundInterval);
     pauseSound(WALK_AUDIO);
@@ -189,6 +227,9 @@ class Character extends MovableObject {
     this.isWalkingSoundPlaying = false;
   }
 
+  /**
+   * Plays walking sound if character is moving and on ground.
+   */
   playWalkSound() {
     if (
       (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) &&
@@ -199,6 +240,9 @@ class Character extends MovableObject {
     }
   }
 
+  /**
+   * Handles the idle animation logic based on player inactivity.
+   */
   handleIdle() {
     intervalManager.register(
       setInterval(() => {
@@ -217,6 +261,9 @@ class Character extends MovableObject {
     );
   }
 
+  /**
+   * Triggers short or long idle animation depending on inactivity duration.
+   */
   playIdleAnimation() {
     const now = Date.now();
     const idleTooLong = now - this.lastActionTime > 12000;
@@ -230,6 +277,9 @@ class Character extends MovableObject {
     this.playAnimation(images);
   }
 
+  /**
+   * Updates audio state depending on idle status.
+   */
   updateIdleState() {
     if (
       this.isLongIdle &&
@@ -246,6 +296,9 @@ class Character extends MovableObject {
     }
   }
 
+  /**
+   * Reduces energy on hit and temporarily sets character into a hit state.
+   */
   takingHit() {
     if (!this.gettingHit) {
       this.hit();
@@ -259,6 +312,9 @@ class Character extends MovableObject {
     }
   }
 
+  /**
+   * Triggers the death animation sequence.
+   */
   playDeathAnimation() {
     if (this.deathAnimationPlaying) return;
 
@@ -273,6 +329,9 @@ class Character extends MovableObject {
     SLEEP_AUDIO.currentTime = 0;
   }
 
+  /**
+   * Plays each frame of the death animation and marks it as finished.
+   */
   startDeathAnimationFrames() {
     let frame = 0;
     this.deathInterval = setInterval(() => {
