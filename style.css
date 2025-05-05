@@ -130,6 +130,11 @@ canvas {
   color: white;
 }
 
+#loading-screen h2 {
+  color: white;
+  letter-spacing: 2px;
+}
+
 #loading-bar-container {
   width: 300px;
   height: 20px;
@@ -149,7 +154,7 @@ canvas {
 }
 
 #loading-text {
-  font-size: 14px;
+  font-size: 18px;
   margin-top: 10px;
   opacity: 0.8;
 }
