@@ -109,13 +109,13 @@ canvas {
 }
 
 .end-screen.win {
-  background-image: url("./img/You won, you lost/You Won A.png");
+  background-image: url("img/11_endscreens/you-won.png");
   background-color: rgba(0, 0, 0, 0.45);
   background-size: 60% !important;
 }
 
 .end-screen.lose {
-  background-image: url("./img/9_intro_outro_screens/game_over/oh no you lost!.png");
+  background-image: url("img/9_intro_outro_screens/game_over/oh no you lost!.png");
 }
 
 #loading-screen {

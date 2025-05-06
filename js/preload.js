@@ -130,7 +130,7 @@ function collectImagePaths() {
     "img/6_salsa_bottle/bottle_rotation/bottle_splash/4_bottle_splash.png",
     "img/6_salsa_bottle/bottle_rotation/bottle_splash/5_bottle_splash.png",
     "img/6_salsa_bottle/bottle_rotation/bottle_splash/6_bottle_splash.png",
-    "img/9_intro_outro_screens/game_over/game over!.png",
+    "img/11_endscreens/you-won.png",
     "img/9_intro_outro_screens/game_over/oh no you lost!.png",
     "img/9_intro_outro_screens/start/startscreen_2.png",
     "img/10_icons/exit.svg",
