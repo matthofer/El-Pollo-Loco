@@ -30,17 +30,21 @@ class Coin extends MovableObject {
    * Starts the coin animation.
    */
   animate() {
-    setInterval(() => {
-      this.playAnimation(this.IMAGES_COIN);
-    }, 250);
+    intervalManager.register(
+      setInterval(() => {
+        this.playAnimation(this.IMAGES_COIN);
+      }, 250)
+    );
   }
 
   /**
    * Causes the coin to float up and down.
    */
   float() {
-    setInterval(() => {
-      this.y = this.baseY + Math.sin(Date.now() / 200) * 2;
-    }, 40);
+    intervalManager.register(
+      setInterval(() => {
+        this.y = this.baseY + Math.sin(Date.now() / 200) * 2;
+      }, 40)
+    );
   }
 }

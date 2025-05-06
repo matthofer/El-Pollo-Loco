@@ -177,7 +177,7 @@ class Endboss extends MovableObject {
    */
   die() {
     this.energy = 0;
-    this.world.character.speedY = 38;
+    this.world.character.speedY = 45;
     clearInterval(this.walkAnimInterval);
     clearInterval(this.walkInterval);
     this.playDeathAnimation();
