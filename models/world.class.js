@@ -1,7 +1,6 @@
 class World {
   character = new Character();
   level = level1;
-
   canvas;
   ctx;
   keyboard;
@@ -21,7 +20,8 @@ class World {
     this.ctx = canvas.getContext("2d");
     this.canvas = canvas;
     this.keyboard = keyboard;
-    this.draw();
+    this.ui = new WorldUI(this);
+    this.ui.draw();
     this.setWorld();
     this.run();
   }
@@ -33,9 +33,7 @@ class World {
     this.character.world = this;
     this.totalCoins = this.level.coins.length;
     this.totalBottles = this.level.bottles.length;
-    this.level.enemies.forEach((enemy) => {
-      enemy.world = this;
-    });
+    this.level.enemies.forEach((enemy) => {enemy.world = this;});
   }
 
   /**
@@ -50,7 +48,6 @@ class World {
    */
   update() {
     if (this.gameOver || this.gameWon) return;
-
     this.checkThrowObjects();
     this.checkCollisions();
     this.checkThrowableCollisions();
@@ -75,7 +72,6 @@ class World {
   handleBottleThrow() {
     const now = Date.now();
     const cooldown = 800;
-
     if (this.canThrowBottle(now, cooldown)) {
       this.createAndThrowBottle();
       this.updateBottleBar();
@@ -89,11 +85,7 @@ class World {
    * @returns {boolean} True if bottle can be thrown.
    */
   canThrowBottle(now, cooldown) {
-    return (
-      this.keyboard.D &&
-      now - this.lastThrowTime > cooldown &&
-      this.collectedBottles > 0
-    );
+    return (this.keyboard.D && now - this.lastThrowTime > cooldown && this.collectedBottles > 0);
   }
 
   /**
@@ -124,9 +116,7 @@ class World {
    * Removes bottles marked for deletion from the array.
    */
   cleanupThrowables() {
-    this.throwableObjects = this.throwableObjects.filter(
-      (obj) => !obj.markedForDeletion
-    );
+    this.throwableObjects = this.throwableObjects.filter((obj) => !obj.markedForDeletion);
   }
 
   /**
@@ -142,9 +132,7 @@ class World {
    */
   handleEnemyCollision(enemy) {
     if (
-      enemy.isColliding(this.character) &&
-      !enemy.isDead() &&
-      !this.character.isDead()
+      enemy.isColliding(this.character) && !enemy.isDead() && !this.character.isDead()
     ) {
       if (this.isCollisionFromAbove(enemy)) {
         this.character.afterJump = false;
@@ -163,7 +151,6 @@ class World {
   handleCharacterDamage(enemy) {
     if (!this.character.isHurt() && !this.character.gettingHit) {
       if (enemy instanceof Endboss) enemy.startAttackAnimation();
-
       this.character.takingHit();
       this.statusBar.setPercentage(this.character.energy);
     }
@@ -176,11 +163,8 @@ class World {
    */
   isCollisionFromAbove(enemy) {
     if (!this.character.isColliding(enemy)) return false;
-
-    const characterFeet =
-      this.character.y + this.character.height - this.character.offset.bottom;
+    const characterFeet = this.character.y + this.character.height - this.character.offset.bottom;
     const enemyHead = enemy.y + enemy.offset.top;
-
     return characterFeet >= enemyHead - 30 && characterFeet <= enemyHead + 40;
   }
 
@@ -204,63 +188,11 @@ class World {
     if (bottle.isColliding(enemy) && !bottle.hasHit) {
       bottle.hasHit = true;
       bottle.shatterBottle();
-
       if (enemy instanceof Endboss) {
         enemy.hitByBottle();
       } else {
         enemy.hit();
       }
-    }
-  }
-
-  /**
-   * Clears and redraws the game canvas including movable and fixed objects.
-   */
-  draw() {
-    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-    this.ctx.translate(this.camera_x, 0);
-    this.drawMovableObjects();
-    this.ctx.translate(-this.camera_x, 0);
-    this.drawFixedObjects();
-    this.handleEndScreenDraw();
-
-    if (!this.gameOver && !this.gameWon) {
-      requestAnimationFrame(() => {
-        this.draw();
-        this.checkOtherDirection();
-      });
-    }
-  }
-
-  /**
-   * Draws movable game elements.
-   */
-  drawMovableObjects() {
-    this.addObjectsToMap(this.level.backgroundObjects);
-    this.addObjectsToMap(this.level.clouds);
-    this.addToMap(this.character);
-    this.addObjectsToMap(this.level.enemies);
-    this.addObjectsToMap(this.throwableObjects);
-    this.addObjectsToMap(this.level.coins);
-    this.addObjectsToMap(this.level.bottles);
-  }
-
-  /**
-   * Draws static UI elements like health bars.
-   */
-  drawFixedObjects() {
-    this.addToMap(this.statusBar);
-    this.addToMap(this.bottleBar);
-    this.addToMap(this.coinBar);
-    if (this.endbossBar.visible) this.addToMap(this.endbossBar);
-  }
-
-  /**
-   * Shows the end screen when the game is over or won.
-   */
-  handleEndScreenDraw() {
-    if (this.gameOver || this.gameWon) {
-      this.showEndScreen();
     }
   }
 
@@ -279,7 +211,6 @@ class World {
   addToMap(mo) {
     if (mo.otherDirection) this.flipImage(mo);
     mo.draw(this.ctx);
-    // mo.drawFrame(this.ctx);
     if (mo.otherDirection) this.flipImageBack(mo);
   }
 
@@ -309,7 +240,6 @@ class World {
   checkOtherDirection() {
     if (this.keyboard.LEFT && !this.character.speed == 0)
       this.character.otherDirection = true;
-
     if (this.keyboard.RIGHT && !this.character.speed == 0)
       this.character.otherDirection = false;
   }
@@ -368,8 +298,7 @@ class World {
     }
     const screenLeft = -this.camera_x;
     const screenRight = screenLeft + this.canvas.width;
-    this.endbossBar.visible =
-      endboss.x + endboss.width > screenLeft && endboss.x < screenRight;
+    this.endbossBar.visible = endboss.x + endboss.width > screenLeft && endboss.x < screenRight;
   }
 
   /**
@@ -385,7 +314,6 @@ class World {
         playSound(COIN_AUDIO);
       }
     });
-
     this.level.coins = this.level.coins.filter((c) => !c.markedForDeletion);
   }
 
@@ -402,35 +330,6 @@ class World {
         playSound(BOTTLE_COLLECT_AUDIO);
       }
     });
-
     this.level.bottles = this.level.bottles.filter((b) => !b.markedForDeletion);
-  }
-
-  /**
-   * Displays the correct end screen based on win/loss condition.
-   */
-  showEndScreen() {
-    if (this.character.isDead() && this.character.deathAnimationFinished) {
-      this.gameOver = true;
-      showEndScreen(false);
-      return;
-    }
-
-    this.level.enemies.forEach((enemy) => this.checkEndbossWin(enemy));
-  }
-
-  /**
-   * Triggers end screen if endboss is dead and animation finished.
-   * @param {MovableObject} enemy
-   */
-  checkEndbossWin(enemy) {
-    if (
-      enemy instanceof Endboss &&
-      enemy.isDead() &&
-      enemy.deathAnimationFinished
-    ) {
-      this.gameWon = true;
-      showEndScreen(true);
-    }
   }
 }
