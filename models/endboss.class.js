@@ -130,19 +130,23 @@ class Endboss extends MovableObject {
   hitByBottle() {
     this.bottleHits++;
     const remainingLife = Math.max(0, 100 - this.bottleHits * 10);
-
     if (this.world?.endbossBar) {
       this.world.endbossBar.setPercentage(remainingLife);
       playSound(BOSS_HURT_AUDIO);
     }
-
     this.clearAllIntervals();
-
     if (this.bottleHits >= 10) {
       this.die();
       return;
     }
+    this.applyHitEffects();
+  }
 
+  /**
+   * Increases speed and applies knockback + hurt animation.
+   */
+  applyHitEffects() {
+    this.speed += 0.8;
     this.playHurtAnimation();
   }
 
@@ -177,7 +181,7 @@ class Endboss extends MovableObject {
    */
   die() {
     this.energy = 0;
-    this.world.character.speedY = 45;
+    this.world.character.speedY = 50;
     clearInterval(this.walkAnimInterval);
     clearInterval(this.walkInterval);
     this.playDeathAnimation();
